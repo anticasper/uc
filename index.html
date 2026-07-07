@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Parques</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="min-h-screen text-slate-800">
+  <div class="page-shell mx-auto max-w-[1240px] px-4 py-7 md:px-6 lg:px-8">
+    <header class="filter-bar">
+      <form id="filters-form" class="filter-grid">
+        <label class="top-search" for="search">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M10.8 4.2a6.6 6.6 0 1 0 0 13.2 6.6 6.6 0 0 0 0-13.2ZM2.7 10.8a8.1 8.1 0 1 1 14.4 5.1l3.9 3.9-1.2 1.2-3.9-3.9A8.1 8.1 0 0 1 2.7 10.8Z"/>
+          </svg>
+          <input
+            id="search"
+            name="search"
+            type="text"
+            placeholder="CEP, Parque, cidade ou bioma"
+          >
+        </label>
+
+        <select id="park-filter" name="park" class="filter-select">
+          <option value="">Parque</option>
+        </select>
+
+        <select id="biome-filter" name="biome" class="filter-select">
+          <option value="">Bioma</option>
+        </select>
+
+        <select id="city-filter" name="city" class="filter-select">
+          <option value="">Cidade</option>
+        </select>
+
+        <select id="activity-filter" name="activity" class="filter-select">
+          <option value="">Tipo de Atividade</option>
+        </select>
+
+        <button type="submit" class="explore-button">Explorar</button>
+      </form>
+    </header>
+
+    <main class="map-layout">
+      <aside class="state-panel">
+        <label class="state-search" for="state-search">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M10.8 4.2a6.6 6.6 0 1 0 0 13.2 6.6 6.6 0 0 0 0-13.2ZM2.7 10.8a8.1 8.1 0 1 1 14.4 5.1l3.9 3.9-1.2 1.2-3.9-3.9A8.1 8.1 0 0 1 2.7 10.8Z"/>
+          </svg>
+          <input id="state-search" type="text" placeholder="Buscar estado...">
+        </label>
+
+        <div class="state-summary">
+          <span id="state-count">0 estados</span>
+          <strong><span id="results-count">0</span> UCs previstas</strong>
+        </div>
+
+        <div id="results-list" class="results-scroll state-list"></div>
+      </aside>
+
+      <section class="map-card">
+        <div class="map-wrap">
+          <div class="country-dialog">
+            <p class="country-dialog__eyebrow">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 2.8a6.7 6.7 0 0 0-6.7 6.7c0 4.9 6.7 11.7 6.7 11.7s6.7-6.8 6.7-11.7A6.7 6.7 0 0 0 12 2.8Zm0 9.2a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z"/>
+              </svg>
+              Brasil
+            </p>
+            <strong id="dialog-count">0</strong>
+            <span>Unidades de Conservacao previstas</span>
+            <em>Atividades gratuitas</em>
+          </div>
+
+          <div id="map"></div>
+
+          <div class="map-legend">
+            <span><i class="legend-dot legend-dot--uc"></i>Unidades de Conservacao</span>
+            <span><i class="legend-dot legend-dot--selected"></i>Estado selecionado</span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <template id="state-group-template">
+    <section class="state-group">
+      <button type="button" class="state-group__header">
+        <span class="state-group__badge" data-uf></span>
+        <span class="state-group__copy">
+          <span class="state-group__name" data-state-name></span>
+          <span class="state-group__meta" data-state-meta></span>
+        </span>
+        <svg class="state-group__arrow" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 0 1 .02-1.06L10.94 10 7.23 6.29a.75.75 0 1 1 1.06-1.06l4.24 4.24a.75.75 0 0 1 0 1.06l-4.24 4.24a.75.75 0 0 1-1.08-.02Z" clip-rule="evenodd" />
+        </svg>
+      </button>
+
+      <div class="state-group__body" data-state-body></div>
+    </section>
+  </template>
+
+  <template id="park-item-template">
+    <article class="result-card">
+      <p class="result-card__title" data-name></p>
+      <p class="result-card__meta" data-location></p>
+      <p class="result-card__text" data-description></p>
+    </article>
+  </template>
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+  <script src="./app.js"></script>
+</body>
+</html>
