@@ -1,0 +1,27 @@
+/**
+ * Public stylesheet for IM Dia no Parque plugin
+ *
+ * @package IM_Dia_No_Parque
+ * @subpackage IM_Dia_No_Parque/public
+ */
+
+/* Estilos básicos para a parte pública */
+.im-dia-no-parque-wrapper {
+    margin: 20px 0;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 4px;
+}
+
+.im-dia-no-parque-wrapper h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.im-dia-no-parque-event {
+    margin-bottom: 15px;
+    padding: 15px;
+    background: #fff;
+    border-left: 4px solid #0073aa;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}

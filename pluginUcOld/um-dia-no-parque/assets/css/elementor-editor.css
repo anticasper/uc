@@ -1,0 +1,86 @@
+/**
+ * Elementor Editor Styles
+ *
+ * Styles applied inside the Elementor editor (preview area).
+ *
+ * @since      1.0.0
+ * @package    Um_Dia_No_Parque
+ */
+
+/* Widget placeholder in the editor panel */
+.elementor-element .icon .fa-tree {
+    color: #28a745;
+}
+
+.elementor-element .icon .fa-info-circle,
+.elementor-element .icon .fa-search {
+    color: #0073aa;
+}
+
+.elementor-element .icon .fa-calendar-alt {
+    color: #e83e8c;
+}
+
+.elementor-element .icon .fa-file-alt {
+    color: #6f42c1;
+}
+
+.elementor-element .icon .fa-database {
+    color: #17a2b8;
+}
+
+/* Highlight our category in the widget panel */
+.elementor-element-wrapper[data-widget_type^="um-dia-no-parque-"] .elementor-element-title {
+    font-weight: 500;
+}
+
+/* Editor live preview */
+.parque-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.parque-card-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    background: #e9ecef;
+}
+
+.parque-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.parque-card-content {
+    padding: 20px;
+}
+
+.parque-card-status {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #fff;
+    background: #28a745;
+}
+
+.parque-card-title {
+    margin: 0 0 10px;
+    font-size: 18px;
+}
+
+/* Dynamic Tags badge in editor */
+.elementor-dynamic-cover {
+    border-left-color: #28a745 !important;
+}
+
+.elementor-dynamic-cover .elementor-dynamic-cover__title {
+    font-weight: 500;
+}

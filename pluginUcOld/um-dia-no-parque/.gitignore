@@ -1,0 +1,32 @@
+# WordPress Plugin — Um Dia No Parque
+# ====================================
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE / editor
+.vscode/
+.idea/
+*.sublime-*
+*.swp
+*.swo
+*~
+
+# Hermes agent
+.hermes/
+
+# Composer (vendor is managed, not committed)
+vendor/
+
+# Logs
+*.log
+
+# Temp / upload artifacts
+wp-content/uploads/umdnp-import/
+
+# Build artifacts (if any)
+dist/
+build/
+node_modules/

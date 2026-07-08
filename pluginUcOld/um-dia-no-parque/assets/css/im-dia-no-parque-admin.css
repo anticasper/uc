@@ -1,0 +1,1077 @@
+/**
+ * Admin stylesheet for Um dia No Parque plugin
+ *
+ * @package Um_Dia_No_Parque
+ * @subpackage Um_Dia_No_Parque/admin
+ */
+
+/* Estilos básicos para o painel administrativo */
+.um-dia-no-parque-admin-wrapper {
+    margin: 20px;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+}
+
+.um-dia-no-parque-admin-wrapper h2 {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+/* ==========================================
+   Developer Info / About Page
+   ========================================== */
+
+.umdnp-about-wrap {
+    max-width: 960px;
+    margin: 20px auto;
+}
+
+.umdnp-about-wrap h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e0e0e0;
+    color: #1d2327;
+}
+
+.umdnp-about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.umdnp-about-card {
+    background: #fff;
+    border: 1px solid #dcdcde;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    padding: 24px;
+    transition: box-shadow 0.2s ease;
+}
+
+.umdnp-about-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.umdnp-about-card h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f1;
+    color: #1d2327;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.umdnp-about-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    color: #1d2327;
+}
+
+.umdnp-about-card h4 {
+    font-size: 13px;
+    font-weight: 600;
+    margin: 16px 0 8px;
+    color: #646970;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Full-width cards */
+.umdnp-about-card--skills,
+.umdnp-about-card--credits,
+.umdnp-about-card--system {
+    grid-column: 1 / -1;
+}
+
+/* Plugin info table */
+.umdnp-about-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.umdnp-about-table tr {
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.umdnp-about-table tr:last-child {
+    border-bottom: none;
+}
+
+.umdnp-about-table td {
+    padding: 8px 0;
+    vertical-align: top;
+}
+
+.umdnp-about-table .umdnp-label {
+    width: 140px;
+    font-weight: 500;
+    color: #646970;
+    font-size: 13px;
+}
+
+.umdnp-badge {
+    display: inline-block;
+    background: #006600;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 12px;
+    letter-spacing: 0.3px;
+}
+
+/* Developer */
+.umdnp-dev-logo {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.umdnp-dev-logo img {
+    max-width: 120px;
+    height: auto;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.umdnp-dev-name {
+    text-align: center;
+    font-size: 20px !important;
+}
+
+.umdnp-dev-tagline {
+    text-align: center;
+    color: #646970;
+    font-size: 14px;
+    margin: 0 0 16px;
+}
+
+.umdnp-dev-contacts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.umdnp-dev-contacts li {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 0;
+    font-size: 13px;
+}
+
+.umdnp-dev-contacts .dashicons {
+    color: #006600;
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+}
+
+.umdnp-dev-contacts a {
+    text-decoration: none;
+}
+
+.umdnp-dev-contacts a:hover {
+    text-decoration: underline;
+}
+
+/* Social links */
+.umdnp-dev-social ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.umdnp-dev-social li a {
+    display: inline-block;
+    padding: 4px 12px;
+    background: #f0f0f1;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    color: #2271b1;
+    transition: background 0.2s ease;
+}
+
+.umdnp-dev-social li a:hover {
+    background: #dcdcde;
+    color: #135e96;
+}
+
+/* Useful links */
+.umdnp-links-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.umdnp-links-list li {
+    padding: 6px 0;
+}
+
+.umdnp-links-list a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    color: #2271b1;
+    transition: color 0.2s ease;
+}
+
+.umdnp-links-list a:hover {
+    color: #135e96;
+    text-decoration: underline;
+}
+
+.umdnp-links-list .dashicons {
+    color: #006600;
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+}
+
+/* Skills tags */
+.umdnp-skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.umdnp-skill-tag {
+    display: inline-block;
+    padding: 4px 14px;
+    background: #f0f6fc;
+    border: 1px solid #c5d9ed;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #1d2327;
+}
+
+/* Toggle (system info) */
+.umdnp-toggle-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: #646970;
+    display: inline-flex;
+    align-items: center;
+}
+
+.umdnp-toggle-btn:hover {
+    color: #1d2327;
+}
+
+.umdnp-toggle-btn .dashicons {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    transition: transform 0.2s ease;
+}
+
+.umdnp-toggle-btn[aria-expanded="true"] .dashicons {
+    transform: rotate(180deg);
+}
+
+.umdnp-toggle-content {
+    margin-top: 8px;
+}
+
+.umdnp-sysinfo-plugins {
+    background: #f6f7f7;
+    border: 1px solid #dcdcde;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    line-height: 1.6;
+    max-height: 200px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+/* System info table inside toggle */
+#umdnp-sysinfo .umdnp-about-table td {
+    font-size: 12px;
+}
+
+#umdnp-sysinfo .umdnp-about-table .umdnp-label {
+    width: 180px;
+}
+
+/* Footer */
+.umdnp-about-footer {
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid #dcdcde;
+    text-align: center;
+    color: #646970;
+    font-size: 13px;
+}
+
+/* Responsive */
+@media screen and (max-width: 782px) {
+    .umdnp-about-content {
+        grid-template-columns: 1fr;
+    }
+
+    .umdnp-about-table .umdnp-label {
+        width: 110px;
+    }
+}
+
+/* Plugin action link */
+a.umdnp-action-link {
+    color: #006600 !important;
+    font-weight: 500 !important;
+}
+
+/* ==========================================
+   Settings Page Styles
+   ========================================== */
+
+.umdnp-settings-wrap {
+    margin: 20px 20px 0 2px;
+}
+
+.umdnp-settings-wrap h1 {
+    font-size: 23px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #dcdcde;
+}
+
+.umdnp-settings-wrap .nav-tab-wrapper {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #c3c4c7;
+}
+
+.umdnp-settings-wrap .nav-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    padding: 10px 18px;
+}
+
+.umdnp-settings-wrap .nav-tab .dashicons {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+}
+
+.umdnp-settings-wrap .nav-tab-active {
+    border-bottom-color: #f0f0f1;
+    background: #f0f0f1;
+}
+
+.umdnp-settings-content {
+    background: #fff;
+    border: 1px solid #dcdcde;
+    border-radius: 6px;
+    padding: 24px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    max-width: 960px;
+}
+
+.umdnp-settings-content form > h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.umdnp-settings-content .form-table th {
+    width: 220px;
+    font-weight: 600;
+}
+
+.umdnp-settings-content .form-table td p.description {
+    font-size: 13px;
+    color: #646970;
+    margin-top: 4px;
+}
+
+.umdnp-settings-content .form-table input[type="text"],
+.umdnp-settings-content .form-table input[type="number"] {
+    border: 1px solid #8c8f94;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-size: 14px;
+}
+
+.umdnp-settings-content .form-table input[type="text"]:focus,
+.umdnp-settings-content .form-table input[type="number"]:focus {
+    border-color: #2271b1;
+    box-shadow: 0 0 0 1px #2271b1;
+    outline: none;
+}
+
+.umdnp-settings-content .form-table input[type="checkbox"] {
+    margin-top: -2px;
+}
+
+.umdnp-settings-content .submit {
+    padding-top: 20px;
+    margin-top: 20px;
+    border-top: 1px solid #f0f0f1;
+}
+
+.umdnp-settings-content .submit .button-primary {
+    padding: 6px 24px;
+    font-size: 14px;
+    min-height: 36px;
+}
+
+/* ==========================================
+   Cache Tools
+   ========================================== */
+
+.umdnp-cache-tools > .description {
+    font-size: 14px;
+    margin-bottom: 24px;
+    color: #646970;
+}
+
+.umdnp-cache-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.umdnp-cache-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+    background: #f6f7f7;
+    border: 1px solid #dcdcde;
+    border-radius: 8px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.umdnp-cache-card:hover {
+    border-color: #c3c4c7;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.umdnp-cache-card-danger {
+    border-color: #ffc5c5;
+    background: #fef7f7;
+}
+
+.umdnp-cache-card-danger:hover {
+    border-color: #ff9999;
+}
+
+.umdnp-cache-card-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    background: #fff;
+    border: 1px solid #dcdcde;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.umdnp-cache-card-danger .umdnp-cache-card-icon {
+    border-color: #ffc5c5;
+    color: #d63638;
+}
+
+.umdnp-cache-card-icon .dashicons {
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+    color: #2271b1;
+}
+
+.umdnp-cache-card-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.umdnp-cache-card-content h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 6px;
+    color: #1d2327;
+}
+
+.umdnp-cache-card-content p {
+    font-size: 13px;
+    color: #646970;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.umdnp-cache-card-action {
+    flex-shrink: 0;
+    align-self: center;
+}
+
+.umdnp-cache-card-action .button {
+    font-size: 13px;
+    min-height: 30px;
+}
+
+#umdnp-cache-message {
+    margin: 16px 0 0;
+    padding: 12px 16px;
+}
+
+#umdnp-cache-message p {
+    margin: 0;
+    font-size: 14px;
+}
+
+@keyframes umdnp-spin {
+    100% { transform: rotate(360deg); }
+}
+
+.umdnp-clear-cache-btn .spinning {
+    animation: umdnp-spin 0.8s linear infinite;
+}
+
+/* ==========================================
+   System Info Page
+   ========================================== */
+
+.umdnp-sysinfo {
+    max-width: 960px;
+}
+
+.umdnp-sysinfo-section {
+    margin-bottom: 24px;
+    background: #fff;
+    border: 1px solid #dcdcde;
+    border-radius: 6px;
+    padding: 20px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.umdnp-sysinfo-section h2 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f1;
+    color: #1d2327;
+}
+
+.umdnp-sysinfo-section table.widefat {
+    border: none;
+    box-shadow: none;
+    margin: 0;
+}
+
+.umdnp-sysinfo-section table.widefat td {
+    padding: 8px 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    vertical-align: top;
+}
+
+.umdnp-sysinfo-label {
+    width: 240px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.umdnp-sysinfo-value {
+    color: #50575e;
+    word-break: break-word;
+}
+
+/* ==========================================
+   Responsive
+   ========================================== */
+
+@media screen and (max-width: 782px) {
+    .umdnp-settings-content .form-table th {
+        width: auto;
+    }
+
+    .umdnp-cache-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .umdnp-cache-card {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .umdnp-cache-card-action {
+        text-align: right;
+    }
+
+    .umdnp-sysinfo-label {
+        width: 140px;
+    }
+}
+
+/* ==========================================
+   Logs Viewer Styles
+   ========================================== */
+
+.umdnp-logs-tab .umdnp-logs-header {
+    margin-bottom: 16px;
+}
+
+.umdnp-logs-toolbar {
+    margin-top: 12px;
+}
+
+.umdnp-logs-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.umdnp-logs-filter select,
+.umdnp-logs-filter input[type="text"] {
+    border: 1px solid #8c8f94;
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-size: 13px;
+    min-height: 30px;
+}
+
+.umdnp-logs-filter .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    min-height: 30px;
+}
+
+.umdnp-logs-filter .button .dashicons {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+}
+
+#umdnp-logs-message {
+    margin: 12px 0;
+}
+
+.umdnp-logs-table-wrap {
+    overflow-x: auto;
+}
+
+.umdnp-logs-table {
+    margin: 0;
+    border: 1px solid #dcdcde;
+}
+
+.umdnp-logs-table th {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.umdnp-log-col-time {
+    width: 160px;
+    white-space: nowrap;
+    font-size: 12px;
+    color: #646970;
+}
+
+.umdnp-log-col-level {
+    width: 90px;
+}
+
+.umdnp-log-col-msg {
+    word-break: break-word;
+}
+
+.umdnp-log-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.umdnp-log-badge-debug {
+    background: #f0f6fc;
+    color: #2271b1;
+}
+
+.umdnp-log-badge-info {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.umdnp-log-badge-warning {
+    background: #fff8e1;
+    color: #f57f17;
+}
+
+.umdnp-log-badge-error {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.umdnp-log-row-error td {
+    background-color: #fff8f8 !important;
+}
+
+.umdnp-log-context-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 6px;
+    color: #646970;
+    vertical-align: middle;
+}
+
+.umdnp-log-context-toggle:hover {
+    color: #2271b1;
+}
+
+.umdnp-log-context-toggle.active {
+    color: #2271b1;
+}
+
+.umdnp-log-context-toggle .dashicons {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+}
+
+.umdnp-log-context {
+    margin: 6px 0 0;
+    padding: 8px 12px;
+    background: #f6f7f7;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    font-size: 11px;
+    line-height: 1.4;
+    max-height: 200px;
+    overflow: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.umdnp-logs-empty {
+    padding: 40px 20px;
+    text-align: center;
+    color: #646970;
+    font-size: 14px;
+    background: #f6f7f7;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+}
+
+/* Mobile */
+@media screen and (max-width: 782px) {
+    .umdnp-logs-filter {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .umdnp-logs-filter select,
+    .umdnp-logs-filter input[type="text"] {
+        width: 100%;
+    }
+}
+
+/* ==========================================
+   Apoiadores Admin — Column Badges
+   ========================================== */
+
+.apoiador-nivel-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.6;
+}
+
+.apoiador-nivel--ouro {
+    background-color: #FFD700;
+    color: #5a4000;
+}
+
+.apoiador-nivel--prata {
+    background-color: #E8E8E8;
+    color: #555555;
+}
+
+.apoiador-nivel--bronze {
+    background-color: #CD7F32;
+    color: #ffffff;
+}
+
+.apoiador-nivel--parceiro {
+    background-color: #4CAF50;
+    color: #ffffff;
+}
+
+.apoiador-nivel--none {
+    background-color: #f0f0f1;
+    color: #646970;
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+/* Column logo thumbnail fix */
+.fixed .column-logo {
+    width: 50px;
+    text-align: center;
+}
+
+.fixed .column-nivel {
+    width: 100px;
+}
+
+.fixed .column-ordem {
+    width: 70px;
+}
+
+/* ==========================================
+   Reset / Redefinir Tab
+   ========================================== */
+
+.umdnp-reset-tab h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #d63638;
+}
+
+.umdnp-reset-tab .notice-warning {
+    border-left-color: #d63638;
+    margin-bottom: 24px;
+}
+
+.umdnp-reset-tab .notice-warning p {
+    font-size: 14px;
+}
+
+.umdnp-reset-items {
+    margin-bottom: 24px;
+}
+
+.umdnp-reset-select-all {
+    padding: 12px 16px;
+    background: #f0f0f1;
+    border: 1px solid #dcdcde;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+
+.umdnp-reset-select-all input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.umdnp-reset-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 16px;
+    background: #fff;
+    border: 1px solid #dcdcde;
+    border-top: none;
+    transition: background 0.15s ease;
+}
+
+.umdnp-reset-item:first-of-type {
+    border-top: 1px solid #dcdcde;
+    border-radius: 6px 6px 0 0;
+}
+
+.umdnp-reset-item:last-of-type {
+    border-radius: 0 0 6px 6px;
+}
+
+.umdnp-reset-item:hover {
+    background: #f6f7f7;
+}
+
+.umdnp-reset-item label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.umdnp-reset-item input[type="checkbox"] {
+    flex-shrink: 0;
+}
+
+.umdnp-reset-item .dashicons {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    color: #d63638;
+}
+
+.umdnp-reset-item-label {
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.umdnp-reset-item-desc {
+    margin: 0 0 0 36px;
+    font-size: 13px;
+    color: #646970;
+}
+
+.umdnp-reset-actions {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f1;
+}
+
+.umdnp-reset-all-btn {
+    background: #d63638 !important;
+    border-color: #d63638 !important;
+    color: #fff !important;
+    font-size: 15px !important;
+    padding: 8px 24px !important;
+    min-height: 44px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    box-shadow: 0 2px 4px rgba(214, 54, 56, 0.3) !important;
+}
+
+.umdnp-reset-all-btn:hover {
+    background: #b32d2e !important;
+    border-color: #b32d2e !important;
+    box-shadow: 0 3px 8px rgba(214, 54, 56, 0.4) !important;
+}
+
+.umdnp-reset-all-btn:active {
+    background: #8c2223 !important;
+    border-color: #8c2223 !important;
+}
+
+.umdnp-reset-all-btn .dashicons {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+}
+
+.umdnp-reset-all-btn .spinning {
+    animation: umdnp-spin 0.8s linear infinite;
+}
+
+#umdnp-reset-message {
+    margin: 16px 0;
+    padding: 12px 16px;
+}
+
+#umdnp-reset-message p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Progress bar during removal */
+.umdnp-reset-progress-bar {
+    height: 12px;
+    background: #e5e5e5;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.umdnp-reset-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #d63638, #b32d2e);
+    border-radius: 20px;
+    transition: width 0.6s ease;
+    box-shadow: 0 0 6px rgba(214,54,56,0.4);
+}
+
+.umdnp-reset-progress-label {
+    margin: 8px 0 0;
+    font-size: 13px;
+    color: #646970;
+    text-align: center;
+}
+
+/* Certification table */
+.umdnp-reset-cert-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 16px;
+    background: #edfaef;
+    border: 1px solid #c3e6c3;
+    border-bottom: 0;
+    border-radius: 6px 6px 0 0;
+    font-size: 15px;
+    color: #2c702c;
+}
+
+.umdnp-reset-cert-head .dashicons {
+    width: 22px;
+    height: 22px;
+    font-size: 22px;
+    color: #00a32a;
+}
+
+.umdnp-reset-cert-table {
+    border-collapse: collapse;
+    border: 1px solid #dcdcde;
+    border-top: 0;
+}
+
+.umdnp-reset-cert-table th {
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.umdnp-reset-cert-table th,
+.umdnp-reset-cert-table td {
+    padding: 10px 14px;
+    vertical-align: middle;
+}
+
+.umdnp-reset-cert-table .dashicons {
+    margin-right: 4px;
+}
+
+.umdnp-reset-cert-footer {
+    margin: 0;
+    padding: 12px 16px;
+    background: #f6f7f7;
+    border: 1px solid #dcdcde;
+    border-top: 0;
+    border-radius: 0 0 6px 6px;
+    font-size: 13px;
+    color: #50575e;
+}

@@ -1,0 +1,2924 @@
+/**
+ * Elementor Widgets Styles
+ * 
+ * Styles for Um Dia No Parque Elementor widgets
+ * 
+ * @since      1.0.0
+ * @package    Um_Dia_No_Parque
+ */
+
+/* ============================================
+   Eventos Widget Styles
+   ============================================ */
+
+.um-dia-no-parque-events {
+    width: 100%;
+}
+
+.um-dia-no-parque-events-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.um-dia-no-parque-event-item {
+    margin-bottom: 20px;
+}
+
+.um-dia-no-parque-events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.um-dia-no-parque-event-grid-item {
+    display: flex;
+}
+
+.um-dia-no-parque-event-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.um-dia-no-parque-event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.um-dia-no-parque-event-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.um-dia-no-parque-event-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.um-dia-no-parque-event-content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.um-dia-no-parque-event-date {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.um-dia-no-parque-event-date .day {
+    font-size: 24px;
+    margin-right: 5px;
+}
+
+.um-dia-no-parque-event-date .month {
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.um-dia-no-parque-event-title {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.um-dia-no-parque-event-description {
+    margin: 0 0 15px 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #666;
+    flex: 1;
+}
+
+.um-dia-no-parque-event-link {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #0073aa;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.um-dia-no-parque-event-link:hover {
+    background-color: #005177;
+}
+
+/* Calendar View */
+.um-dia-no-parque-events-calendar {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.um-dia-no-parque-calendar-header {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.um-dia-no-parque-calendar-header h3 {
+    margin: 0;
+    color: #333;
+}
+
+.um-dia-no-parque-calendar-day {
+    display: flex;
+    margin-bottom: 15px;
+    padding: 15px;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.um-dia-no-parque-calendar-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: #0073aa;
+    color: #fff;
+    border-radius: 50%;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.um-dia-no-parque-calendar-date .day {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.um-dia-no-parque-calendar-date .month {
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.um-dia-no-parque-calendar-events {
+    flex: 1;
+}
+
+.um-dia-no-parque-calendar-event {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.um-dia-no-parque-calendar-event:last-child {
+    margin-bottom: 0;
+}
+
+.um-dia-no-parque-calendar-event .time {
+    font-size: 12px;
+    color: #666;
+    margin-right: 10px;
+    min-width: 50px;
+}
+
+.um-dia-no-parque-calendar-event .title {
+    font-weight: 500;
+    color: #333;
+}
+
+/* Featured View */
+.um-dia-no-parque-featured-event {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.um-dia-no-parque-featured-image {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+}
+
+.um-dia-no-parque-featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.um-dia-no-parque-featured-content {
+    padding: 30px;
+}
+
+.um-dia-no-parque-featured-date {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.um-dia-no-parque-featured-date .day {
+    font-size: 32px;
+    font-weight: 600;
+    color: #0073aa;
+}
+
+.um-dia-no-parque-featured-date .month {
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #666;
+    margin-left: 5px;
+}
+
+.um-dia-no-parque-featured-title {
+    margin: 0 0 15px 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+}
+
+.um-dia-no-parque-featured-description {
+    margin: 0 0 20px 0;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #666;
+}
+
+.um-dia-no-parque-featured-link {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #0073aa;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.um-dia-no-parque-featured-link:hover {
+    background-color: #005177;
+}
+
+/* ============================================
+   Formulários Widget Styles
+   ============================================ */
+
+.um-dia-no-parque-form-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.um-dia-no-parque-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.um-dia-no-parque-form-title {
+    margin: 0 0 10px 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+}
+
+.um-dia-no-parque-form-description {
+    margin: 0 0 20px 0;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+}
+
+.um-dia-no-parque-form-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.um-dia-no-parque-form-field label {
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+    font-size: 14px;
+}
+
+.um-dia-no-parque-form-field input[type="text"],
+.um-dia-no-parque-form-field input[type="email"],
+.um-dia-no-parque-form-field input[type="tel"],
+.um-dia-no-parque-form-field textarea {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+}
+
+.um-dia-no-parque-form-field input:focus,
+.um-dia-no-parque-form-field textarea:focus {
+    outline: none;
+    border-color: #0073aa;
+}
+
+.um-dia-no-parque-form-field textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.um-dia-no-parque-form-submit {
+    margin-top: 10px;
+}
+
+.um-dia-no-parque-submit-button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.um-dia-no-parque-submit-button:hover {
+    opacity: 0.9;
+}
+
+.um-dia-no-parque-form-message {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.um-dia-no-parque-form-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.um-dia-no-parque-form-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* ============================================
+   Conteúdo Dinâmico Widget Styles
+   ============================================ */
+
+.um-dia-no-parque-dynamic-content {
+    width: 100%;
+}
+
+.um-dia-no-parque-dynamic-title {
+    margin: 0 0 20px 0;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.um-dia-no-parque-dynamic-content-body {
+    min-height: 50px;
+}
+
+/* Statistics Grid */
+.um-dia-no-parque-statistics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+}
+
+.um-dia-no-parque-statistic-item {
+    text-align: center;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.um-dia-no-parque-statistic-value {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.um-dia-no-parque-statistic-label {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Upcoming Events */
+.um-dia-no-parque-upcoming-events {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.um-dia-no-parque-upcoming-event {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    background: #f9f9f9;
+    border-radius: 6px;
+}
+
+.um-dia-no-parque-upcoming-event:last-child {
+    margin-bottom: 0;
+}
+
+.um-dia-no-parque-upcoming-event .um-dia-no-parque-event-date {
+    margin-right: 15px;
+    margin-bottom: 0;
+}
+
+.um-dia-no-parque-upcoming-event .um-dia-no-parque-event-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.um-dia-no-parque-upcoming-event .title {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.um-dia-no-parque-upcoming-event .time {
+    font-size: 12px;
+    color: #666;
+}
+
+/* Featured Content */
+.um-dia-no-parque-featured-content {
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border-radius: 8px;
+}
+
+.um-dia-no-parque-featured-content h4 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+}
+
+.um-dia-no-parque-featured-content p {
+    margin: 0 0 15px 0;
+    line-height: 1.5;
+}
+
+.um-dia-no-parque-featured-link {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.um-dia-no-parque-featured-link:hover {
+    text-decoration: none;
+}
+
+/* Weather Info */
+.um-dia-no-parque-weather-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: #fff;
+    border-radius: 8px;
+}
+
+.um-dia-no-parque-weather-icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.um-dia-no-parque-weather-temp {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.um-dia-no-parque-weather-desc {
+    font-size: 16px;
+}
+
+/* Park Hours */
+.um-dia-no-parque-park-hours {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.um-dia-no-parque-park-hour-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 15px;
+    background: #f9f9f9;
+    border-radius: 6px;
+}
+
+.um-dia-no-parque-park-hour-item .day {
+    font-weight: 500;
+    color: #333;
+}
+
+.um-dia-no-parque-park-hour-item .time {
+    color: #666;
+}
+
+/* Custom Content */
+.um-dia-no-parque-custom-content {
+    line-height: 1.6;
+}
+
+.um-dia-no-parque-custom-content .alert {
+    padding: 15px;
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 4px;
+    color: #856404;
+}
+
+/* ============================================
+   Responsive Styles
+   ============================================ */
+
+@media (max-width: 768px) {
+    .um-dia-no-parque-events-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .um-dia-no-parque-statistics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .um-dia-no-parque-featured-event {
+        border-radius: 0;
+    }
+    
+    .um-dia-no-parque-calendar-day {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .um-dia-no-parque-calendar-date {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .um-dia-no-parque-statistics-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .um-dia-no-parque-form-wrapper {
+        padding: 0 15px;
+    }
+    
+    .um-dia-no-parque-featured-content,
+    .um-dia-no-parque-weather-info {
+        padding: 20px;
+    }
+}
+
+/* ============================================
+   Parques Widgets Styles
+   ============================================ */
+
+.um-dia-no-parque-lista-parques {
+    width: 100%;
+}
+
+.parques-container {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(var(--umdnp-cols-desktop, 3), 1fr);
+}
+
+@media (max-width: 1024px) {
+    .parques-container {
+        grid-template-columns: repeat(var(--umdnp-cols-tablet, 2), 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+    .parques-container {
+        grid-template-columns: repeat(var(--umdnp-cols-mobile, 1), 1fr);
+    }
+}
+
+.um-dia-no-parque-lista-list .parques-container {
+    grid-template-columns: 1fr;
+}
+
+.um-dia-no-parque-lista-compact .parques-container {
+    grid-template-columns: repeat(var(--umdnp-cols-desktop, 4), 1fr);
+}
+
+.parque-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.parque-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.parque-card-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.parque-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.parque-card-image a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.parque-card-status {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #fff;
+}
+
+.parque-card-status.status-aberto {
+    background: #28a745;
+}
+
+.parque-card-status.status-fechado {
+    background: #dc3545;
+}
+
+.parque-card-status.status-manutencao {
+    background: #ffc107;
+    color: #333;
+}
+
+.parque-card-status.status-reforma {
+    background: #6c757d;
+}
+
+.parque-card-content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.parque-card-title {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.parque-card-title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.parque-card-title a:hover {
+    color: #0073aa;
+}
+
+.parque-card-categorias {
+    margin-bottom: 10px;
+}
+
+.categoria-tag {
+    display: inline-block;
+    background: #e9ecef;
+    color: #495057;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.parque-card-excerpt {
+    margin: 0 0 15px 0;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+    flex: 1;
+}
+
+.parque-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    color: #666;
+}
+
+.meta-icon {
+    margin-right: 5px;
+}
+
+.parque-card-actions {
+    margin-top: auto;
+}
+
+.btn-card {
+    display: block;
+    width: 100%;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: opacity 0.3s ease;
+}
+
+.btn-card:hover {
+    opacity: 0.9;
+}
+
+.no-parques {
+    text-align: center;
+    padding: 40px 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    color: #666;
+}
+
+/* List Layout Specific */
+.um-dia-no-parque-lista-list .parque-card {
+    flex-direction: row;
+}
+
+.um-dia-no-parque-lista-list .parque-card-image {
+    width: 250px;
+    height: auto;
+    flex-shrink: 0;
+}
+
+.um-dia-no-parque-lista-list .parque-card-content {
+    flex: 1;
+}
+
+/* Compact Layout Specific */
+.um-dia-no-parque-lista-compact .parque-card-image {
+    height: 150px;
+}
+
+.um-dia-no-parque-lista-compact .parque-card-content {
+    padding: 15px;
+}
+
+.um-dia-no-parque-lista-compact .parque-card-title {
+    font-size: 16px;
+}
+
+.um-dia-no-parque-lista-compact .parque-card-excerpt {
+    display: none;
+}
+
+/* Detalhes do Parque Widget */
+.um-dia-no-parque-detalhes-parque {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.parque-detalhes-image {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.parque-detalhes-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.parque-detalhes-header {
+    margin-bottom: 20px;
+}
+
+.parque-detalhes-title {
+    margin: 0 0 10px 0;
+    font-size: 28px;
+}
+
+.parque-detalhes-categorias {
+    margin-top: 10px;
+}
+
+.parque-detalhes-description {
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.parque-detalhes-info,
+.parque-detalhes-horarios,
+.parque-detalhes-localizacao,
+.parque-detalhes-contato,
+.parque-detalhes-servicos {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.parque-detalhes-info h3,
+.parque-detalhes-horarios h3,
+.parque-detalhes-localizacao h3,
+.parque-detalhes-contato h3,
+.parque-detalhes-servicos h3 {
+    margin: 0 0 15px 0;
+    font-size: 18px;
+    border-bottom: 2px solid #0073aa;
+    padding-bottom: 10px;
+}
+
+.info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.info-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.info-list li:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    font-weight: 500;
+    color: #666;
+}
+
+.info-value {
+    font-weight: 600;
+    color: #333;
+}
+
+.horarios-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.horario-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 4px;
+}
+
+.horario-dia {
+    font-weight: 500;
+    color: #333;
+}
+
+.horario-horas {
+    color: #666;
+}
+
+.horario-status.fechado {
+    color: #dc3545;
+    font-weight: 500;
+}
+
+.parque-detalhes-localizacao p,
+.parque-detalhes-contato p {
+    margin: 10px 0;
+}
+
+.parque-detalhes-localizacao a,
+.parque-detalhes-contato a {
+    color: #0073aa;
+    text-decoration: none;
+}
+
+.parque-detalhes-localizacao a:hover,
+.parque-detalhes-contato a:hover {
+    text-decoration: underline;
+}
+
+.btn-mapa {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #0073aa;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 10px;
+    transition: background 0.3s ease;
+}
+
+.btn-mapa:hover {
+    background: #005177;
+}
+
+.servicos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.servico-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    background: #f9f9f9;
+    border-radius: 4px;
+}
+
+.servico-icon {
+    color: #28a745;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.servico-nome {
+    font-size: 14px;
+}
+
+.parque-detalhes-button {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.btn-detalhes {
+    display: inline-block;
+    padding: 12px 30px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: opacity 0.3s ease;
+}
+
+.btn-detalhes:hover {
+    opacity: 0.9;
+}
+
+/* Responsive Styles for Parques Widgets */
+@media (max-width: 768px) {
+    .um-dia-no-parque-lista-grid .parques-container,
+    .um-dia-no-parque-lista-compact .parques-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .um-dia-no-parque-lista-list .parque-card {
+        flex-direction: column;
+    }
+    
+    .um-dia-no-parque-lista-list .parque-card-image {
+        width: 100%;
+        height: 200px;
+    }
+    
+    .parque-detalhes-image {
+        height: 200px;
+    }
+    
+    .parque-detalhes-title {
+        font-size: 24px;
+    }
+    
+    .servicos-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .info-list li {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
+/* ============================================
+   Busca de Parques Widget Styles
+   ============================================ */
+
+.um-dia-no-parque-busca-parques {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.parque-busca-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    align-items: end;
+}
+
+.busca-campo {
+    display: flex;
+    flex-direction: column;
+}
+
+.busca-campo label {
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #333;
+    font-size: 14px;
+}
+
+.busca-campo input,
+.busca-campo select {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+}
+
+.busca-campo input:focus,
+.busca-campo select:focus {
+    outline: none;
+    border-color: #0073aa;
+}
+
+.busca-botoes {
+    display: flex;
+    gap: 10px;
+    grid-column: 1 / -1;
+}
+
+.btn-busca,
+.btn-limpar {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: opacity 0.3s ease;
+    flex: 1;
+}
+
+.btn-busca:hover,
+.btn-limpar:hover {
+    opacity: 0.9;
+}
+
+.btn-limpar {
+    background: #6c757d;
+    color: #fff;
+}
+
+/* Responsive Styles for Busca Widget */
+@media (max-width: 768px) {
+    .parque-busca-form {
+        grid-template-columns: 1fr;
+    }
+    
+    .busca-botoes {
+        flex-direction: column;
+    }
+}
+
+/* ============================================
+   Pagination Styles
+   ============================================ */
+
+.parques-pagination {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.parques-pagination .page-numbers {
+    display: inline-block;
+    padding: 8px 14px;
+    margin: 0 3px;
+    background: #f9f9f9;
+    color: #333;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.parques-pagination .page-numbers:hover {
+    background: #0073aa;
+    color: #fff;
+}
+
+.parques-pagination .page-numbers.current {
+    background: #0073aa;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* ============================================
+   Loading State
+   ============================================ */
+
+.um-dia-no-parque-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    color: #666;
+    font-size: 14px;
+}
+
+.um-dia-no-parque-loading::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border: 2px solid #e9ecef;
+    border-top: 2px solid #0073aa;
+    border-radius: 50%;
+    animation: umdnp-spin 0.8s linear infinite;
+}
+
+@keyframes umdnp-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   Mapa Interativo Widget
+   ============================================ */
+
+.umdnp-mapa-wrapper {
+    width: 100%;
+}
+
+/* --- Filtros --- */
+.umdnp-mapa-filtros {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.umdnp-mapa-filtros-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+}
+
+.umdnp-mapa-filtro-item {
+    flex: 1 1 160px;
+    min-width: 130px;
+}
+
+.umdnp-mapa-filtro-busca {
+    flex: 2 1 300px;
+    min-width: 200px;
+}
+
+.umdnp-mapa-filtro-item input,
+.umdnp-mapa-filtro-item select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: inherit;
+    background-color: #fff;
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.umdnp-mapa-filtro-item input:focus,
+.umdnp-mapa-filtro-item select:focus {
+    outline: none;
+    border-color: #0073aa;
+    box-shadow: 0 0 0 2px rgba(0, 115, 170, 0.1);
+}
+
+.umdnp-mapa-filtro-item input::placeholder {
+    color: #999;
+}
+
+/* --- Botão Buscar --- */
+.umdnp-mapa-filtros-actions {
+    flex: 0 0 auto;
+}
+
+.umdnp-mapa-btn-buscar {
+    padding: 10px 28px;
+    background-color: #0073aa;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.umdnp-mapa-btn-buscar:hover {
+    background-color: #005177;
+}
+
+.umdnp-mapa-btn-buscar:active {
+    transform: scale(0.98);
+}
+
+/* --- Map Container --- */
+.umdnp-mapa-content {
+    display: flex;
+    gap: 15px;
+    position: relative;
+}
+
+.umdnp-mapa-container {
+    flex: 1;
+    min-height: 300px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.umdnp-mapa-container .leaflet-container {
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 1;
+}
+
+.umdnp-mapa-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    font-size: 14px;
+    color: #666;
+}
+
+.umdnp-mapa-loading span::before {
+    content: '';
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    border: 2px solid #e9ecef;
+    border-top: 2px solid #0073aa;
+    border-radius: 50%;
+    animation: umdnp-spin 0.8s linear infinite;
+    vertical-align: middle;
+}
+
+/* --- Lista Lateral --- */
+.umdnp-mapa-com-lista .umdnp-mapa-content {
+    display: flex;
+}
+
+.umdnp-mapa-com-lista .umdnp-mapa-container {
+    flex: 1;
+}
+
+.umdnp-mapa-lista {
+    width: 320px;
+    min-width: 280px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: inherit;
+}
+
+.umdnp-mapa-lista-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 14px 16px;
+    background: #f5f5f5;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.umdnp-mapa-lista-count {
+    font-weight: 700;
+    color: #0073aa;
+    font-size: 18px;
+}
+
+.umdnp-mapa-lista-label {
+    color: #666;
+}
+
+.umdnp-mapa-lista-itens {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 450px;
+}
+
+.umdnp-mapa-lista-placeholder {
+    padding: 30px 20px;
+    text-align: center;
+    color: #999;
+    font-size: 13px;
+    margin: 0;
+}
+
+.umdnp-mapa-lista-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.umdnp-mapa-lista-item:last-child {
+    border-bottom: none;
+}
+
+.umdnp-mapa-lista-item:hover {
+    background-color: #f0f8ff;
+}
+
+.umdnp-mapa-lista-item.active {
+    background-color: #e3f2fd;
+    border-left: 3px solid #0073aa;
+}
+
+.umdnp-mapa-lista-item-thumb {
+    width: 50px;
+    height: 50px;
+    border-radius: 6px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.umdnp-mapa-lista-item-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.umdnp-mapa-lista-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.umdnp-mapa-lista-item-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 3px 0;
+    line-height: 1.3;
+}
+
+.umdnp-mapa-lista-item-cidade {
+    font-size: 12px;
+    color: #888;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.umdnp-mapa-lista-item-endereco {
+    font-size: 11px;
+    color: #999;
+    display: block;
+    margin-bottom: 2px;
+    line-height: 1.3;
+}
+
+.umdnp-mapa-lista-item-status {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.umdnp-mapa-lista-item-status.aberto {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.umdnp-mapa-lista-item-status.fechado {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.umdnp-mapa-lista-item-status.manutencao,
+.umdnp-mapa-lista-item-status.reforma {
+    background-color: #fff3e0;
+    color: #ef6c00;
+}
+
+/* --- Filters Position: Side --- */
+.umdnp-mapa-filters-position-side .umdnp-mapa-content {
+    flex-direction: row;
+}
+
+.umdnp-mapa-filters-position-side .umdnp-mapa-filtros {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+/* --- Filtros Position: Bottom --- */
+.umdnp-mapa-filters-position-bottom .umdnp-mapa-content {
+    flex-direction: column;
+}
+
+.umdnp-mapa-filters-position-bottom .umdnp-mapa-filtros {
+    order: 2;
+    margin-top: 15px;
+    margin-bottom: 0;
+}
+
+.umdnp-mapa-filters-position-bottom .umdnp-mapa-container,
+.umdnp-mapa-filters-position-bottom .umdnp-mapa-lista {
+    order: 1;
+}
+
+/* --- Lista Position: Left --- */
+.umdnp-mapa-lista-left .umdnp-mapa-content {
+    flex-direction: row-reverse;
+}
+
+/* --- Lista Position: Right (default) --- */
+.umdnp-mapa-lista-right .umdnp-mapa-content {
+    flex-direction: row;
+}
+
+/* --- Custom Leaflet Marker Styles --- */
+.umdnp-marker-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    border: 2px solid #fff;
+}
+
+.umdnp-marker-icon .dashicons {
+    transform: rotate(45deg);
+}
+
+/**
+ * Image-based marker icon.
+ * Removes the pin shape rotation for natural image display.
+ */
+.umdnp-marker-icon-image {
+    border-radius: 50%;
+    transform: none;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    overflow: hidden;
+}
+
+.umdnp-marker-icon-image img {
+    display: block;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.umdnp-marker-icon.status-aberto {
+    background-color: #4CAF50;
+}
+
+.umdnp-marker-icon.status-fechado {
+    background-color: #F44336;
+}
+
+.umdnp-marker-icon.status-manutencao,
+.umdnp-marker-icon.status-reforma {
+    background-color: #FF9800;
+}
+
+/* Leaflet popup custom styles */
+.umdnp-popup-wrapper {
+    min-width: 220px;
+    max-width: 300px;
+}
+
+.umdnp-popup-wrapper .umdnp-popup-thumb {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.umdnp-popup-wrapper .umdnp-popup-thumb-placeholder {
+    width: 100%;
+    height: 80px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 4px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 24px;
+}
+
+.umdnp-popup-wrapper h4 {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.umdnp-popup-wrapper .umdnp-popup-cidade {
+    font-size: 12px;
+    color: #888;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.umdnp-popup-wrapper .umdnp-popup-endereco {
+    font-size: 12px;
+    color: #555;
+    display: block;
+    margin-bottom: 3px;
+    line-height: 1.4;
+}
+
+.umdnp-popup-wrapper .umdnp-popup-cep {
+    font-size: 11px;
+    color: #999;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.umdnp-popup-wrapper .umdnp-popup-status {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+.umdnp-popup-wrapper .umdnp-popup-status.aberto {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.umdnp-popup-wrapper .umdnp-popup-status.fechado {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.umdnp-popup-wrapper .umdnp-popup-status.manutencao,
+.umdnp-popup-wrapper .umdnp-popup-status.reforma {
+    background-color: #fff3e0;
+    color: #ef6c00;
+}
+
+.umdnp-popup-wrapper .umdnp-popup-link {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 6px 14px;
+    background-color: #0073aa;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.umdnp-popup-wrapper .umdnp-popup-link:hover {
+    background-color: #005177;
+}
+
+/* --- Leaflet Cluster Overrides --- */
+.marker-cluster-small {
+    background-color: rgba(0, 115, 170, 0.2) !important;
+}
+.marker-cluster-small div {
+    background-color: #0073aa !important;
+    color: #fff !important;
+    font-weight: 600;
+}
+.marker-cluster-medium {
+    background-color: rgba(0, 115, 170, 0.3) !important;
+}
+.marker-cluster-medium div {
+    background-color: #0073aa !important;
+    color: #fff !important;
+    font-weight: 600;
+}
+.marker-cluster-large {
+    background-color: rgba(0, 115, 170, 0.4) !important;
+}
+.marker-cluster-large div {
+    background-color: #005177 !important;
+    color: #fff !important;
+    font-weight: 600;
+}
+
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+    .umdnp-mapa-lista {
+        width: 260px;
+        min-width: 220px;
+    }
+}
+
+@media (max-width: 767px) {
+    .umdnp-mapa-filtros-grid {
+        flex-direction: column;
+    }
+
+    .umdnp-mapa-filtro-item {
+        flex: 1 1 100%;
+        min-width: 100%;
+    }
+
+    .umdnp-mapa-com-lista .umdnp-mapa-content {
+        flex-direction: column;
+    }
+
+    .umdnp-mapa-lista {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    .umdnp-mapa-lista-itens {
+        max-height: 250px;
+    }
+}
+
+/* ============================================
+   Apoiadores Widget Styles
+   ============================================ */
+
+.umdnp-apoiadores {
+    width: 100%;
+}
+
+/* Grid Layout */
+.umdnp-apoiadores-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--umdnp-cols-desktop, 4), 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 1024px) {
+    .umdnp-apoiadores-grid {
+        grid-template-columns: repeat(var(--umdnp-cols-tablet, 3), 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+    .umdnp-apoiadores-grid {
+        grid-template-columns: repeat(var(--umdnp-cols-mobile, 2), 1fr);
+    }
+}
+
+/* List Layout */
+.umdnp-apoiadores-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.umdnp-apoiadores-list .umdnp-apoiador-card {
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.umdnp-apoiadores-list .umdnp-apoiador-logo {
+    flex-shrink: 0;
+    width: 120px;
+}
+
+/* Card */
+.umdnp-apoiador-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px 15px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+    box-sizing: border-box;
+}
+
+.umdnp-apoiador-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo */
+.umdnp-apoiador-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.umdnp-apoiador-logo img {
+    max-width: 150px;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+/* Name */
+.umdnp-apoiador-nome {
+    margin: 10px 0 0 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333333;
+    line-height: 1.4;
+}
+
+/* Nivel Badge */
+.umdnp-apoiador-nivel {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.6;
+}
+
+.umdnp-apoiador-nivel--ouro {
+    background-color: #FFD700;
+    color: #5a4000;
+}
+
+.umdnp-apoiador-nivel--prata {
+    background-color: #E8E8E8;
+    color: #555555;
+}
+
+.umdnp-apoiador-nivel--bronze {
+    background-color: #CD7F32;
+    color: #ffffff;
+}
+
+.umdnp-apoiador-nivel--parceiro {
+    background-color: #4CAF50;
+    color: #ffffff;
+}
+
+/* Description */
+.umdnp-apoiador-descricao {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #666666;
+    line-height: 1.5;
+}
+
+.umdnp-apoiador-descricao p {
+    margin: 0 0 8px;
+}
+
+.umdnp-apoiador-descricao p:last-child {
+    margin-bottom: 0;
+}
+
+/* ============================================
+   Experiências Widget Styles
+   ============================================ */
+
+.umdnp-experiencias-wrapper {
+    width: 100%;
+}
+
+/* Grid Layout */
+.umdnp-experiencias-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--umdnp-cols-d, 3), 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 1024px) {
+    .umdnp-experiencias-grid {
+        grid-template-columns: repeat(var(--umdnp-cols-t, 2), 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+    .umdnp-experiencias-grid {
+        grid-template-columns: repeat(var(--umdnp-cols-m, 1), 1fr);
+    }
+}
+
+/* List Layout */
+.umdnp-experiencias-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.umdnp-experiencias-list .umdnp-experiencia-card {
+    flex-direction: row;
+}
+
+.umdnp-experiencias-list .umdnp-experiencia-card-image {
+    width: 300px;
+    min-height: 200px;
+    flex-shrink: 0;
+}
+
+.umdnp-experiencias-list .umdnp-experiencia-card-body {
+    flex: 1;
+}
+
+@media (max-width: 767px) {
+    .umdnp-experiencias-list .umdnp-experiencia-card {
+        flex-direction: column;
+    }
+    .umdnp-experiencias-list .umdnp-experiencia-card-image {
+        width: 100%;
+        min-height: 180px;
+    }
+}
+
+/* Card */
+.umdnp-experiencia-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.umdnp-experiencia-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Image */
+.umdnp-experiencia-card-image {
+    height: 200px;
+    overflow: hidden;
+    background-color: #f5f5f5;
+}
+
+.umdnp-experiencia-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Card Body */
+.umdnp-experiencia-card-body {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Card Title */
+.umdnp-experiencia-card-title {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.umdnp-experiencia-card-title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.umdnp-experiencia-card-title a:hover {
+    color: #0073aa;
+}
+
+/* Card Excerpt / Description */
+.umdnp-experiencia-card-excerpt {
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+    flex: 1;
+}
+
+/* Card Link / Read More */
+.umdnp-experiencia-card-link {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #0073aa;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    align-self: flex-start;
+}
+
+.umdnp-experiencia-card-link:hover {
+    background-color: #005177;
+    color: #ffffff;
+}
+
+/* Card Date */
+.umdnp-experiencia-card-date {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Button Alignment */
+.umdnp-experiencia-card-link-wrap {
+    margin-top: auto;
+}
+
+.umdnp-experiencia-card-link-wrap.umdnp-align-left {
+    text-align: left;
+}
+
+.umdnp-experiencia-card-link-wrap.umdnp-align-center {
+    text-align: center;
+}
+
+.umdnp-experiencia-card-link-wrap.umdnp-align-right {
+    text-align: right;
+}
+
+.umdnp-experiencia-card-link-wrap.umdnp-align-center .umdnp-experiencia-card-link,
+.umdnp-experiencia-card-link-wrap.umdnp-align-right .umdnp-experiencia-card-link {
+    align-self: auto;
+}
+
+/* Pagination */
+.umdnp-experiencias-pagination {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.umdnp-experiencias-pagination ul {
+    display: inline-flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 4px;
+}
+
+.umdnp-experiencias-pagination ul li {
+    margin: 0;
+}
+
+.umdnp-experiencias-pagination ul li a,
+.umdnp-experiencias-pagination ul li span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    text-decoration: none;
+    color: #333;
+    background: #fff;
+    transition: all 0.2s ease;
+}
+
+.umdnp-experiencias-pagination ul li span.current {
+    background: #0073aa;
+    border-color: #0073aa;
+    color: #fff;
+    font-weight: 600;
+}
+
+.umdnp-experiencias-pagination ul li a:hover {
+    background: #f5f5f5;
+    border-color: #999;
+}
+
+/* ============================================
+   Momentos Inspiradores Widget Styles
+   ============================================ */
+
+.umdnp-momentos-wrapper {
+    width: 100%;
+}
+
+/* Grid Layout */
+.umdnp-momentos-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--umdnp-cols-d, 3), 1fr);
+    gap: 10px;
+}
+
+@media (max-width: 1024px) {
+    .umdnp-momentos-grid {
+        grid-template-columns: repeat(var(--umdnp-cols-t, 2), 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+    .umdnp-momentos-grid {
+        grid-template-columns: repeat(var(--umdnp-cols-m, 1), 1fr);
+    }
+}
+
+/* Aspect Ratio Variants */
+.umdnp-momentos-grid.umdnp-momento-ratio-1-1 .umdnp-momento-image,
+.umdnp-momento-ratio-1-1 .umdnp-momento-image {
+    aspect-ratio: 1 / 1;
+}
+
+.umdnp-momentos-grid.umdnp-momento-ratio-4-3 .umdnp-momento-image,
+.umdnp-momento-ratio-4-3 .umdnp-momento-image {
+    aspect-ratio: 4 / 3;
+}
+
+.umdnp-momentos-grid.umdnp-momento-ratio-3-2 .umdnp-momento-image,
+.umdnp-momento-ratio-3-2 .umdnp-momento-image {
+    aspect-ratio: 3 / 2;
+}
+
+.umdnp-momentos-grid.umdnp-momento-ratio-16-9 .umdnp-momento-image,
+.umdnp-momento-ratio-16-9 .umdnp-momento-image {
+    aspect-ratio: 16 / 9;
+}
+
+.umdnp-momentos-grid.umdnp-momento-ratio-auto .umdnp-momento-image,
+.umdnp-momento-ratio-auto .umdnp-momento-image {
+    height: 250px;
+}
+
+/* Item */
+.umdnp-momento-item {
+    position: relative;
+    overflow: hidden;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: default;
+}
+
+.umdnp-momento-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.umdnp-momento-item:hover .umdnp-momento-image img {
+    transform: scale(1.08);
+}
+
+/* Image */
+.umdnp-momento-image {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.umdnp-momento-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+/* Overlay */
+.umdnp-momento-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 15px 15px;
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+    pointer-events: none;
+}
+
+/* Title */
+.umdnp-momento-title {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 1.3;
+}
+
+/* Legenda */
+.umdnp-momento-legenda {
+    font-size: 13px;
+    color: #ffffff;
+    line-height: 1.4;
+}
+
+/* Legenda without overlay (when overlay is disabled) */
+.umdnp-momento-item > .umdnp-momento-legenda {
+    position: relative;
+    padding: 10px 15px 15px;
+    color: #333333;
+    background-color: #ffffff;
+}
+
+/* Title without overlay */
+.umdnp-momento-item > .umdnp-momento-title {
+    position: relative;
+    padding: 10px 15px 15px;
+    color: #333333;
+    background-color: #ffffff;
+}
+
+/* ============================================
+   Lista de UCs Widget Styles (v1.2.0)
+   ============================================ */
+
+.umdnp-lista-uc {
+    width: 100%;
+}
+
+.umdnp-lista-uc .umdnp-uc-item {
+    display: flex;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+    align-items: flex-start;
+}
+
+.umdnp-lista-uc .umdnp-uc-item:last-child {
+    border-bottom: none;
+}
+
+.umdnp-lista-uc .umdnp-uc-image {
+    flex: 0 0 120px;
+}
+
+.umdnp-lista-uc .umdnp-uc-image img {
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.umdnp-lista-uc .umdnp-uc-info {
+    flex: 1;
+}
+
+.umdnp-lista-uc .umdnp-uc-info h3 {
+    margin: 0 0 4px;
+    font-size: 16px;
+}
+
+.umdnp-lista-uc .umdnp-uc-info h3 a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.umdnp-lista-uc .umdnp-uc-info h3 a:hover {
+    color: #0073aa;
+}
+
+.umdnp-lista-uc .umdnp-uc-tag {
+    display: inline-block;
+    background: #0073aa;
+    color: #fff;
+    padding: 1px 8px;
+    border-radius: 8px;
+    font-size: 11px;
+    margin-right: 4px;
+}
+
+.umdnp-lista-uc .umdnp-uc-meta {
+    color: #646970;
+    font-size: 13px;
+    margin: 4px 0 0;
+}
+
+/* ============================================
+   Detalhes da UC Widget Styles (v1.2.0)
+   ============================================ */
+
+.umdnp-uc-detalhes {
+    width: 100%;
+}
+
+.umdnp-uc-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.umdnp-uc-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #f0f0f1;
+    vertical-align: top;
+}
+
+.umdnp-uc-table tr:last-child td {
+    border-bottom: none;
+}
+
+.umdnp-uc-label {
+    font-weight: 600;
+    color: #50575e;
+    width: 30%;
+    white-space: nowrap;
+}
+
+.umdnp-uc-value {
+    color: #333;
+}
+
+/* ============================================
+   Lista UC Widget Styles
+   ============================================ */
+
+.umdnp-lista-uc-filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.umdnp-filtro-input,
+.umdnp-filtro-select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    flex: 0 0 calc(60% - 4px);
+}
+
+.umdnp-filtro-select {
+    flex: 0 0 calc(20% - 6px);
+}
+
+.umdnp-lista-uc {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.umdnp-uc-item {
+    display: flex;
+    overflow: hidden;
+    border-radius: 0;
+    transition: box-shadow 0.3s ease;
+}
+
+.umdnp-uc-image {
+    flex-shrink: 0;
+    width: 120px;
+    height: 80px;
+    overflow: hidden;
+}
+
+.umdnp-uc-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.umdnp-uc-info {
+    padding: 10px 15px;
+    flex: 1;
+}
+
+.umdnp-uc-info h3 {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.umdnp-uc-info h3 a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.umdnp-uc-meta {
+    margin: 0;
+    font-size: 13px;
+    color: #666;
+}
+
+.umdnp-lista-uc-filtros .button {
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+/* ============================================
+   Detalhes UC Widget Styles
+   ============================================ */
+
+.umdnp-uc-detalhes {
+    width: 100%;
+}
+
+.umdnp-uc-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.umdnp-uc-table td {
+    padding: 12px 15px;
+    vertical-align: top;
+}
+
+.umdnp-uc-table tr:not(:last-child) td {
+    border-bottom: 1px solid #eee;
+}
+
+.umdnp-uc-label {
+    font-weight: 600;
+    color: #666;
+    width: 30%;
+    white-space: nowrap;
+}
+
+.umdnp-uc-value {
+    color: #333;
+}
+
+.umdnp-uc-value a {
+    color: #0073aa;
+    text-decoration: none;
+}
+
+.umdnp-uc-value a:hover {
+    text-decoration: underline;
+}
+
+/* ============================================
+   Explorar Widget
+   ============================================ */
+
+.umdnp-explorar-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.umdnp-explorar-sidebar {
+    flex-shrink: 0;
+    border-radius: 8px;
+}
+
+.umdnp-explorar-sidebar h4 {
+    margin: 0 0 8px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.umdnp-explorar-search {
+    margin-bottom: 24px;
+}
+
+.umdnp-explorar-search input {
+    width: 100%;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    line-height: 1.4;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.umdnp-explorar-search input:focus {
+    border-color: #0073aa;
+}
+
+.umdnp-explorar-filter-group {
+    margin-bottom: 20px;
+}
+
+.umdnp-explorar-filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 240px;
+    overflow-y: auto;
+}
+
+.umdnp-explorar-filter-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    line-height: 1.4;
+    cursor: pointer;
+}
+
+.umdnp-explorar-filter-label input[type="checkbox"] {
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.umdnp-explorar-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.umdnp-explorar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.umdnp-explorar-grid[data-columns="2"] {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.umdnp-explorar-grid[data-columns="3"] {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.umdnp-explorar-grid[data-columns="4"] {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.umdnp-explorar-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.umdnp-explorar-hover-lift .umdnp-explorar-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.umdnp-explorar-hover-scale .umdnp-explorar-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.umdnp-explorar-card-body {
+    padding: 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.umdnp-explorar-card-title {
+    margin: 0 0 8px;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #1a1a1a;
+}
+
+.umdnp-explorar-card-desc {
+    margin: 0 0 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #555;
+    flex: 1;
+}
+
+.umdnp-explorar-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 12px;
+    color: #888;
+    margin-top: auto;
+}
+
+.umdnp-explorar-card-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.umdnp-explorar-card-meta-item svg {
+    flex-shrink: 0;
+}
+
+.umdnp-explorar-card.umdnp-hidden {
+    display: none;
+}
+
+.umdnp-explorar-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    color: #888;
+    font-size: 15px;
+}
+
+.umdnp-explorar-card-title a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.umdnp-explorar-card-title a:hover {
+    text-decoration: underline;
+}
+
+/* Botão Ver Atividades */
+.umdnp-explorar-card-btn {
+    display: inline-block;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.umdnp-explorar-card-btn:hover {
+    text-decoration: none;
+}
+
+.umdnp-explorar-card-btn svg {
+    vertical-align: middle;
+}
+
+/* ============================
+   Explorar Card — Layout Imagem de Fundo
+   A imagem cobre o card inteiro, conteúdo sobreposto com gradiente.
+   ============================ */
+.umdnp-explorar-card--bg-image {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: inherit;
+}
+
+.umdnp-explorar-card--bg-image:hover {
+    transform: none !important;
+}
+
+.umdnp-explorar-card--bg-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.80) 0%,
+        rgba(0, 0, 0, 0.45) 45%,
+        rgba(0, 0, 0, 0.15) 70%,
+        rgba(0, 0, 0, 0) 100%
+    );
+    pointer-events: none;
+}
+
+.umdnp-explorar-card--bg-image .umdnp-explorar-card-body {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 24px 20px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.umdnp-explorar-card--bg-image .umdnp-explorar-card-title {
+    color: #ffffff;
+    margin: 0 0 6px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.3;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+.umdnp-explorar-card--bg-image .umdnp-explorar-card-title a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.umdnp-explorar-card--bg-image .umdnp-explorar-card-title a:hover {
+    text-decoration: underline;
+}
+
+.umdnp-explorar-card--bg-image .umdnp-explorar-card-desc {
+    color: rgba(255, 255, 255, 0.90);
+    margin: 0 0 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+.umdnp-explorar-card--bg-image .umdnp-explorar-card-btn {
+    align-self: flex-start;
+    margin-top: auto;
+    color: #ffffff;
+    background-color: rgba(0, 115, 170, 0.90);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.umdnp-explorar-card--bg-image .umdnp-explorar-card-btn:hover {
+    background-color: rgba(0, 90, 135, 0.95);
+    border-color: rgba(255, 255, 255, 0.30);
+}
+
+/* Responsive: empilha sidebar em telas pequenas */
+@media (max-width: 768px) {
+    .umdnp-explorar-wrapper {
+        flex-direction: column;
+    }
+
+    .umdnp-explorar-sidebar {
+        width: 100% !important;
+        flex: none !important;
+    }
+
+    .umdnp-explorar-grid[data-columns] {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .umdnp-explorar-grid[data-columns] {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   Atividades Carousel Widget Styles
+   ============================================ */
+
+.umdnp-atividades-carousel-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.umdnp-atividades-carousel-wrapper.has-nav-arrows {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.umdnp-atividades-carousel-wrapper.has-pagination {
+    padding-bottom: 40px;
+}
+
+.umdnp-atividades-carousel {
+    overflow: hidden;
+    width: 100%;
+}
+
+.umdnp-atividades-carousel .swiper-wrapper {
+    align-items: stretch;
+}
+
+.umdnp-atividades-carousel .swiper-slide {
+    height: auto;
+}
+
+/* Card */
+.umdnp-atividade-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.umdnp-atividade-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.umdnp-atividade-card-body {
+    padding: 25px 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.umdnp-atividade-card-icon {
+    margin-bottom: 12px;
+    line-height: 1;
+}
+
+.umdnp-atividade-card-icon svg {
+    display: block;
+}
+
+.umdnp-atividade-card-title {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #333333;
+}
+
+/* Meta */
+.umdnp-atividade-meta {
+    margin-bottom: 8px;
+}
+
+.umdnp-atividade-meta-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #f2295b;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.umdnp-atividade-meta-value {
+    display: block;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #666666;
+}
+
+/* Button */
+.umdnp-atividade-btn-wrapper {
+    margin-top: auto;
+    padding-top: 15px;
+}
+
+.umdnp-atividade-btn {
+    display: inline-block;
+    padding: 12px 16px;
+    background-color: #f2295b;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+    letter-spacing: 1px;
+}
+
+.umdnp-atividade-btn:hover {
+    background-color: #d11d4a;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* Navigation arrows */
+.umdnp-carousel-nav-prev,
+.umdnp-carousel-nav-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    color: #333333;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.umdnp-carousel-nav-prev:hover,
+.umdnp-carousel-nav-next:hover {
+    background-color: #f2295b;
+    color: #ffffff;
+}
+
+.umdnp-carousel-nav-prev {
+    left: 0;
+}
+
+.umdnp-carousel-nav-next {
+    right: 0;
+}
+
+.umdnp-carousel-nav-prev svg,
+.umdnp-carousel-nav-next svg {
+    display: block;
+}
+
+/* Pagination */
+.umdnp-atividades-carousel-wrapper .swiper-pagination {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+}
+
+.umdnp-atividades-carousel-wrapper .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    background-color: #cccccc;
+    opacity: 1;
+    margin: 0 4px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.umdnp-atividades-carousel-wrapper .swiper-pagination-bullet-active {
+    background-color: #f2295b;
+}
+
+/* Empty state */
+.umdnp-atividades-carousel-empty {
+    padding: 40px;
+    text-align: center;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    color: #888888;
+    font-size: 15px;
+}
+
+.umdnp-atividades-carousel-empty p {
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .umdnp-atividades-carousel-wrapper.has-nav-arrows {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .umdnp-carousel-nav-prev,
+    .umdnp-carousel-nav-next {
+        display: none;
+    }
+}
