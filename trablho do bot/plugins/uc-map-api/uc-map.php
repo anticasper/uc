@@ -1,10 +1,10 @@
-﻿<?php
+<?php
 
 /**
  * Plugin Name: UC Map API
  * Plugin URI: https://barradois.com
- * Description: Exibe um mapa interativo de Unidades de ConservaÃ§Ã£o via shortcode para uso no Elementor.
- * Version: 1.3.4
+ * Description: Exibe um mapa interativo de Unidades de Conservação via shortcode para uso no Elementor.
+ * Version: 1.3.6
  * Author: Diovanni de Souza
  * Author URI: https://barradois.com
  * License: GPL-2.0-or-later
@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
   exit;
 }
 
-define('UC_MAP_VERSION', '1.3.4');
+define('UC_MAP_VERSION', '1.3.6');
 
 function uc_map_asset_version($relative_path)
 {
@@ -331,7 +331,7 @@ function uc_list_render_shortcode()
     <div class="activity-modal" data-activity-modal hidden>
       <div class="activity-modal__backdrop" data-close-activity-modal></div>
       <section class="activity-modal__panel" role="dialog" aria-modal="true" aria-labelledby="activity-modal-title">
-        <button type="button" class="activity-modal__close" data-close-activity-modal aria-label="Fechar">Ã—</button>
+        <button type="button" class="activity-modal__close" data-close-activity-modal aria-label="Fechar">×</button>
         <p class="activity-modal__meta" data-activity-modal-meta></p>
         <h2 data-activity-modal-title></h2>
         <div class="activity-modal__body" data-activity-modal-body></div>

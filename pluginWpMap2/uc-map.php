@@ -4,7 +4,7 @@
  * Plugin Name: UC Map
  * Plugin URI: https://barradois.com
  * Description: Exibe um mapa interativo de Unidades de Conservação via shortcode para uso no Elementor.
- * Version: 1.3.4
+ * Version: 1.6.2
  * Author: Diovanni de Souza
  * Author URI: https://barradois.com
  * License: GPL-2.0-or-later
@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
   exit;
 }
 
-define('UC_MAP_VERSION', '1.3.4');
+define('UC_MAP_VERSION', '1.6.2');
 
 function uc_map_asset_version($relative_path)
 {
@@ -94,6 +94,7 @@ function uc_map_enqueue_assets()
   wp_localize_script('uc-map-app', 'UCMapConfig', [
     'dataUrl' => uc_map_api_data_url('map'),
     'fallbackDataUrl' => $plugin_url . 'assets/map-data.json',
+    'markerLogoUrl' => $plugin_url . 'assets/uc-marker-logo.png',
     'siteUrl' => home_url('/'),
     'fallbackUcUrl' => home_url('/modelo-de-unidades-de-conservacao/'),
   ]);
@@ -125,6 +126,45 @@ function uc_list_enqueue_assets()
     'fallbackDataUrl' => $plugin_url . 'assets/map-data.json',
     'defaultImageUrl' => $plugin_url . 'assets/default-uc-card.svg',
   ]);
+}
+
+function uc_partner_enqueue_assets()
+{
+  static $enqueued = false;
+
+  if ($enqueued) {
+    return;
+  }
+
+  $enqueued = true;
+  $plugin_url = plugin_dir_url(__FILE__);
+
+  uc_map_enqueue_common_assets();
+
+  wp_enqueue_script(
+    'uc-partners-app',
+    $plugin_url . 'assets/partners.js',
+    [],
+    uc_map_asset_version('assets/partners.js'),
+    true
+  );
+}
+
+function uc_testimonial_enqueue_assets($with_slider = false)
+{
+  $plugin_url = plugin_dir_url(__FILE__);
+
+  uc_map_enqueue_common_assets();
+
+  if ($with_slider) {
+    wp_enqueue_script(
+      'uc-testimonials-app',
+      $plugin_url . 'assets/testimonials.js',
+      [],
+      uc_map_asset_version('assets/testimonials.js'),
+      true
+    );
+  }
 }
 
 function uc_single_enqueue_assets()
@@ -342,6 +382,288 @@ function uc_list_render_shortcode()
   return ob_get_clean();
 }
 
+function uc_partner_render_shortcode($atts)
+{
+  $atts = shortcode_atts(
+    [
+      'categoria' => '',
+    ],
+    $atts,
+    'uc_parceiro'
+  );
+
+  $category_slug = sanitize_title($atts['categoria']);
+
+  if (!$category_slug || !post_type_exists('parceiro') || !taxonomy_exists('categoria_parceiro')) {
+    return '';
+  }
+
+  uc_partner_enqueue_assets();
+
+  $partners = new WP_Query([
+    'post_type' => 'parceiro',
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'orderby' => [
+      'menu_order' => 'ASC',
+      'title' => 'ASC',
+    ],
+    'tax_query' => [
+      [
+        'taxonomy' => 'categoria_parceiro',
+        'field' => 'slug',
+        'terms' => $category_slug,
+      ],
+    ],
+    'no_found_rows' => true,
+  ]);
+
+  if (!$partners->have_posts()) {
+    wp_reset_postdata();
+    return '';
+  }
+
+  ob_start();
+?>
+  <div class="uc-partner-slider" data-uc-partner-slider>
+    <div class="uc-partner-slider__viewport">
+      <div class="uc-partner-slider__track" data-uc-partner-track>
+        <?php
+        while ($partners->have_posts()) {
+          $partners->the_post();
+          $post_id = get_the_ID();
+          $title = get_the_title();
+          $link = get_post_meta($post_id, '_parceiro_link', true);
+          $image = get_the_post_thumbnail_url($post_id, 'full');
+        ?>
+          <div class="uc-partner-slide" data-uc-partner-slide>
+            <?php if ($link) : ?>
+              <a class="uc-partner-slide__link" href="<?php echo esc_url($link); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr($title); ?>">
+            <?php else : ?>
+              <span class="uc-partner-slide__frame" aria-label="<?php echo esc_attr($title); ?>">
+            <?php endif; ?>
+
+            <?php if ($image) : ?>
+              <img src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($title); ?>" loading="lazy">
+            <?php else : ?>
+              <span class="uc-partner-slide__fallback"><?php echo esc_html($title); ?></span>
+            <?php endif; ?>
+
+            <?php if ($link) : ?>
+              </a>
+            <?php else : ?>
+              </span>
+            <?php endif; ?>
+          </div>
+        <?php
+        }
+        wp_reset_postdata();
+        ?>
+      </div>
+    </div>
+  </div>
+<?php
+  return ob_get_clean();
+}
+
+function uc_testimonial_get_media($post_id)
+{
+  $video_url = trim((string) get_post_meta($post_id, '_depoimento_url_video', true));
+
+  if ($video_url) {
+    $embed = wp_oembed_get($video_url);
+
+    if ($embed) {
+      return [
+        'type' => 'embed',
+        'html' => $embed,
+      ];
+    }
+
+    return [
+      'type' => 'link',
+      'url' => $video_url,
+    ];
+  }
+
+  $upload_id = absint(get_post_meta($post_id, '_depoimento_upload_video_foto', true));
+
+  if ($upload_id) {
+    $mime = (string) get_post_mime_type($upload_id);
+    $url = wp_get_attachment_url($upload_id);
+
+    if ($url && 0 === strpos($mime, 'video/')) {
+      return [
+        'type' => 'video',
+        'url' => $url,
+        'mime' => $mime,
+      ];
+    }
+
+    $image = wp_get_attachment_image($upload_id, 'large', false, [
+      'class' => 'uc-testimonial__image',
+      'loading' => 'lazy',
+    ]);
+
+    if ($image) {
+      return [
+        'type' => 'image',
+        'html' => $image,
+      ];
+    }
+  }
+
+  $featured = get_the_post_thumbnail($post_id, 'large', [
+    'class' => 'uc-testimonial__image',
+    'loading' => 'lazy',
+  ]);
+
+  if ($featured) {
+    return [
+      'type' => 'image',
+      'html' => $featured,
+    ];
+  }
+
+  return null;
+}
+
+function uc_testimonial_render_media($media)
+{
+  if (!$media) {
+    return '';
+  }
+
+  ob_start();
+?>
+  <div class="uc-testimonial__media uc-testimonial__media--<?php echo esc_attr($media['type']); ?>">
+    <?php if ('embed' === $media['type']) : ?>
+      <div class="uc-testimonial__embed"><?php echo $media['html']; ?></div>
+    <?php elseif ('video' === $media['type']) : ?>
+      <video class="uc-testimonial__video" controls preload="metadata">
+        <source src="<?php echo esc_url($media['url']); ?>" type="<?php echo esc_attr($media['mime']); ?>">
+      </video>
+    <?php elseif ('link' === $media['type']) : ?>
+      <a class="uc-testimonial__video-link" href="<?php echo esc_url($media['url']); ?>" target="_blank" rel="noopener">Abrir video</a>
+    <?php elseif ('image' === $media['type']) : ?>
+      <?php echo $media['html']; ?>
+    <?php endif; ?>
+  </div>
+<?php
+  return ob_get_clean();
+}
+
+function uc_testimonial_is_truthy($value)
+{
+  return in_array(strtolower((string) $value), ['1', 'true', 'yes', 'sim', 'slider'], true);
+}
+
+function uc_testimonial_render_item($post_id, $is_slide = false)
+{
+  $title = get_the_title($post_id);
+  $content = apply_filters('the_content', get_post_field('post_content', $post_id));
+  $media = uc_testimonial_get_media($post_id);
+
+  ob_start();
+?>
+  <article class="uc-testimonial<?php echo $media ? ' uc-testimonial--has-media' : ''; ?><?php echo $is_slide ? ' uc-testimonial--slide' : ''; ?>">
+    <div class="uc-testimonial__inner">
+      <?php echo uc_testimonial_render_media($media); ?>
+
+      <div class="uc-testimonial__content">
+        <?php if ($title) : ?>
+          <h3 class="uc-testimonial__title"><?php echo esc_html($title); ?></h3>
+        <?php endif; ?>
+
+        <?php if ($content) : ?>
+          <div class="uc-testimonial__text"><?php echo wp_kses_post($content); ?></div>
+        <?php endif; ?>
+      </div>
+    </div>
+  </article>
+<?php
+  return ob_get_clean();
+}
+
+function uc_testimonial_render_shortcode($atts)
+{
+  $atts = shortcode_atts(
+    [
+      'id' => 0,
+      'slider' => 'nao',
+      'quantidade' => 6,
+    ],
+    $atts,
+    'uc_depoimento'
+  );
+
+  if (!post_type_exists('depoimento')) {
+    return '';
+  }
+
+  $post_id = absint($atts['id']);
+  $is_slider = !$post_id && uc_testimonial_is_truthy($atts['slider']);
+  $quantity = max(1, min(24, absint($atts['quantidade'])));
+
+  uc_testimonial_enqueue_assets($is_slider);
+
+  $query_args = [
+    'post_type' => 'depoimento',
+    'post_status' => 'publish',
+    'posts_per_page' => $is_slider ? $quantity : 1,
+    'no_found_rows' => true,
+  ];
+
+  if ($post_id) {
+    $query_args['p'] = $post_id;
+  } else {
+    $query_args['orderby'] = 'rand';
+  }
+
+  $testimonial = new WP_Query($query_args);
+
+  if (!$testimonial->have_posts()) {
+    wp_reset_postdata();
+    return '';
+  }
+
+  if ($is_slider) {
+    ob_start();
+?>
+    <div class="uc-testimonial-slider" data-uc-testimonial-slider>
+      <div class="uc-testimonial-slider__viewport">
+        <div class="uc-testimonial-slider__track" data-uc-testimonial-track>
+          <?php
+          while ($testimonial->have_posts()) {
+            $testimonial->the_post();
+            echo '<div class="uc-testimonial-slider__slide" data-uc-testimonial-slide>';
+            echo uc_testimonial_render_item(get_the_ID(), true);
+            echo '</div>';
+          }
+          ?>
+        </div>
+      </div>
+
+      <div class="uc-testimonial-slider__controls">
+        <button type="button" class="uc-testimonial-slider__button" data-uc-testimonial-prev aria-label="Depoimento anterior">&lsaquo;</button>
+        <div class="uc-testimonial-slider__dots" data-uc-testimonial-dots></div>
+        <button type="button" class="uc-testimonial-slider__button" data-uc-testimonial-next aria-label="Proximo depoimento">&rsaquo;</button>
+      </div>
+    </div>
+<?php
+    wp_reset_postdata();
+
+    return ob_get_clean();
+  }
+
+  ob_start();
+  $testimonial->the_post();
+  echo uc_testimonial_render_item(get_the_ID(), false);
+  wp_reset_postdata();
+
+  return ob_get_clean();
+}
+
 function uc_map_enqueue_plugin_assets()
 {
   uc_map_enqueue_assets();
@@ -356,3 +678,5 @@ add_action('elementor/preview/enqueue_styles', 'uc_map_enqueue_plugin_assets');
 add_action('elementor/preview/enqueue_scripts', 'uc_map_enqueue_plugin_assets');
 add_shortcode('uc_map', 'uc_map_render_shortcode');
 add_shortcode('uc_list', 'uc_list_render_shortcode');
+add_shortcode('uc_parceiro', 'uc_partner_render_shortcode');
+add_shortcode('uc_depoimento', 'uc_testimonial_render_shortcode');

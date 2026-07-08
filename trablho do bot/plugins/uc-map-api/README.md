@@ -5,7 +5,7 @@ Plugin WordPress para exibir o mapa e a lista de Unidades de Conservacao no Elem
 ## Informacoes do plugin
 
 - Nome: UC Map
-- Versao: 1.3.4
+- Versao: 1.3.6
 - Autor: ACDEV
 - Site do plugin: https://acdev.com.br
 - Site do autor: https://acdev.com.br

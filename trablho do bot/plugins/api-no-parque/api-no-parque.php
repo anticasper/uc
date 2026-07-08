@@ -3,7 +3,7 @@
  * Plugin Name: API No Parque
  * Plugin URI: https://barradois.com
  * Description: API e importador para integrar a base JSON com os cadastros do plugin Um Dia No Parque.
- * Version: 0.1.0
+ * Version: 0.1.2
  * Author: Diovanni de Souza
  * Author URI: https://barradois.com
  * License: GPL-2.0-or-later
@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 }
 
 final class Api_No_Parque {
-    const VERSION = '0.1.0';
+    const VERSION = '0.1.2';
     const REST_NAMESPACE = 'api-no-parque/v1';
 
     const META_SOURCE_ID = '_api_np_source_id';
@@ -552,6 +552,12 @@ final class Api_No_Parque {
         $search = sanitize_text_field((string) $request->get_param('search'));
         if ($search) {
             $args['s'] = $search;
+        }
+
+        $slug = sanitize_title((string) $request->get_param('slug'));
+        if ($slug) {
+            $args['name'] = $slug;
+            $args['posts_per_page'] = 1;
         }
 
         $tax_query = array();

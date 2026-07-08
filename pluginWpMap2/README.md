@@ -5,7 +5,7 @@ Plugin WordPress para exibir o mapa e a lista de Unidades de Conservacao no Elem
 ## Informacoes do plugin
 
 - Nome: UC Map
-- Versao: 1.3.4
+- Versao: 1.6.2
 - Autor: ACDEV
 - Site do plugin: https://acdev.com.br
 - Site do autor: https://acdev.com.br
@@ -28,8 +28,26 @@ Plugin WordPress para exibir o mapa e a lista de Unidades de Conservacao no Elem
 [uc_list]
 ```
 
+```txt
+[uc_parceiro categoria="parceiros-da-edicao-de-2026"]
+```
+
+```txt
+[uc_depoimento]
+```
+
+```txt
+[uc_depoimento id="123"]
+```
+
+```txt
+[uc_depoimento slider="sim" quantidade="6"]
+```
+
 `[uc_map]` exibe o mapa interativo.
 `[uc_list]` exibe a lista com filtros por busca, bioma e UF. Ao clicar em **Ver Atividades**, abre a janela com as atividades da UC.
+`[uc_parceiro]` exibe apenas um slider de logos de parceiros filtrado pelo slug da taxonomia `categoria_parceiro`.
+`[uc_depoimento]` exibe um depoimento aleatorio ou um depoimento especifico por `id`. Com `slider="sim"`, exibe um carrossel de depoimentos; `quantidade` controla quantos itens entram no slider.
 
 Em paginas individuais do post type `uc`, o plugin hidrata os campos mockados do Elementor com dados reais da API, preservando o layout existente.
 
@@ -37,6 +55,7 @@ O plugin carrega seus proprios assets em `assets/`:
 
 - `app.js`
 - `list.js`
+- `testimonials.js`
 - `single.js`
 - `styles.css`
 - `map-data.json`

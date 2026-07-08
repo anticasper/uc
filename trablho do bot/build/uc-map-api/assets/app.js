@@ -54,6 +54,7 @@ const parkItemTemplate = root.querySelector("#park-item-template");
 const form = root.querySelector("#filters-form");
 const searchInput = root.querySelector("#search");
 const stateSearchInput = root.querySelector("#state-search");
+const markerLogoUrl = window.UCMapConfig?.markerLogoUrl || "";
 
 const map = L.map(root.querySelector("#map"), {
   zoomControl: true,
@@ -108,21 +109,29 @@ function getActivities(item) {
   return [];
 }
 
+function escapeAttribute(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;");
+}
+
 function createMarkerIcon(tone = "default") {
   const toneClass = tone === "active" ? "pin-marker--active" : tone === "selected" ? "pin-marker--selected" : "";
+  const logo = markerLogoUrl
+    ? `<img src="${escapeAttribute(markerLogoUrl)}" alt="" width="16" height="16" loading="lazy" style="display:block;width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;object-fit:contain!important;">`
+    : `<span aria-hidden="true"></span>`;
 
   return L.divIcon({
     className: "",
     html: `
-      <div class="pin-marker ${toneClass}">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 3.2 6.1 12h3.3l-4 6.4h5.1V22h3v-3.6h5.1l-4-6.4h3.3L12 3.2Z"/>
-        </svg>
+      <div class="pin-marker ${toneClass}" style="width:16px!important;height:16px!important;overflow:hidden!important;">
+        ${logo}
       </div>
     `,
-    iconSize: [26, 26],
-    iconAnchor: [13, 13],
-    popupAnchor: [0, -12],
+    iconSize: [16, 16],
+    iconAnchor: [8, 8],
+    popupAnchor: [0, -8],
   });
 }
 

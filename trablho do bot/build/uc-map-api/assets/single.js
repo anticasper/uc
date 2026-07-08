@@ -20,30 +20,110 @@
     return String(node?.textContent || "").replace(/\s+/g, " ").trim();
   }
 
+  function normalizeText(value) {
+    return String(value || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, " ")
+      .trim()
+      .toLowerCase();
+  }
+
+  function matchesText(node, value) {
+    return normalizeText(textOf(node)) === normalizeText(value);
+  }
+
   function setText(node, value) {
     if (node && value) {
       node.textContent = value;
     }
   }
 
+  function parseCoordinate(value) {
+    const normalized = String(value ?? "").trim().replace(",", ".");
+    const parsed = Number(normalized);
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+
+  function getCoordinates(item) {
+    const lat = parseCoordinate(item.lat);
+    const lng = parseCoordinate(item.lng);
+
+    if (lat === null || lng === null) {
+      return null;
+    }
+
+    return { lat, lng };
+  }
+
+  function extractFirstUrl(value) {
+    return firstValue(value).match(/https?:\/\/[^\s<>"']+/i)?.[0] || "";
+  }
+
+  function cleanAddress(value) {
+    return firstValue(value)
+      .replace(/https?:\/\/[^\s<>"']+/gi, "")
+      .replace(/(?:localiza[cç][aã]o no google maps|google maps|endere[cç]o)\s*:?/gi, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
   function getActivities(item) {
     return Array.isArray(item?.atividades) ? item.atividades : [];
   }
 
+  function normalizePhone(...values) {
+    const digits = firstValue(...values).replace(/\D+/g, "");
+
+    if (!digits) {
+      return "";
+    }
+
+    if (digits.startsWith("55")) {
+      return digits;
+    }
+
+    return digits.length >= 10 && digits.length <= 11 ? `55${digits}` : digits;
+  }
+
+  function buildWhatsAppUrl(activity, item) {
+    const phone = normalizePhone(
+      activity.whatsapp,
+      activity.telefone,
+      activity.phone,
+      activity.meta?._atividade_whatsapp,
+      item.whatsapp,
+      item.telefone,
+      item.phone,
+      item.meta?._uc_whatsapp
+    );
+
+    if (!phone) {
+      return "";
+    }
+
+    const activityTitle = firstValue(activity.titulo, activity.title, activity.tipo);
+    const ucTitle = firstValue(item.name, item.title);
+    const text = [
+      "Olá! Tenho interesse em participar da atividade.",
+      activityTitle ? `Atividade: ${activityTitle}` : "",
+      ucTitle ? `UC: ${ucTitle}` : "",
+    ].filter(Boolean).join("\n");
+
+    return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+  }
+
   function getMapUrl(item) {
-    const directUrl = firstValue(item.link_do_endereco);
-    const address = firstValue(item.endereco);
+    const coordinates = getCoordinates(item);
+    const directUrl = firstValue(item.link_do_endereco, extractFirstUrl(item.endereco));
+    const address = cleanAddress(item.endereco);
 
     if (directUrl) {
       return directUrl;
     }
 
-    if (/^https?:\/\//i.test(address)) {
-      return address;
-    }
-
-    if (Number.isFinite(Number(item.lat)) && Number.isFinite(Number(item.lng))) {
-      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${item.lat},${item.lng}`)}`;
+    if (coordinates) {
+      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${coordinates.lat},${coordinates.lng}`)}`;
     }
 
     if (address) {
@@ -53,16 +133,26 @@
     return "";
   }
 
+  function getMapEmbedQuery(item) {
+    const coordinates = getCoordinates(item);
+
+    if (coordinates) {
+      return `${coordinates.lat},${coordinates.lng}`;
+    }
+
+    return cleanAddress(item.endereco) || firstValue(item.city, item.state, item.uf, item.name);
+  }
+
   function allElements(selector) {
     return Array.from(document.querySelectorAll(selector));
   }
 
   function findByText(selector, value) {
-    return allElements(selector).find((node) => textOf(node) === value);
+    return allElements(selector).find((node) => matchesText(node, value));
   }
 
   function findAllByText(selector, value) {
-    return allElements(selector).filter((node) => textOf(node) === value);
+    return allElements(selector).filter((node) => matchesText(node, value));
   }
 
   function findTextWidgetAfter(labelNode) {
@@ -84,16 +174,20 @@
     return null;
   }
 
-  function setValueAfterLabel(root, label, value) {
-    if (!value) {
+  function setValueAfterLabel(root, labels, value) {
+    if (!root) {
       return;
     }
 
+    const labelList = Array.isArray(labels) ? labels : [labels];
     const labelNode = Array.from(root.querySelectorAll(".elementor-heading-title, h1, h2, h3, span"))
-      .find((node) => textOf(node) === label);
+      .find((node) => labelList.some((label) => matchesText(node, label)));
 
     const valueNode = findTextWidgetAfter(labelNode);
-    setText(valueNode, value);
+    if (valueNode) {
+      valueNode.textContent = value || "";
+      valueNode.hidden = !value;
+    }
   }
 
   function activitySummary(activity) {
@@ -103,7 +197,100 @@
     ].filter(Boolean).join(" - ");
   }
 
-  function hydrateActivityCards(activities) {
+  function setActivityButton(button, url) {
+    const widget = button?.closest(".elementor-widget-button") || button;
+
+    if (!button) {
+      return;
+    }
+
+    if (!url) {
+      button.removeAttribute("href");
+      button.hidden = true;
+      button.setAttribute("aria-hidden", "true");
+      if (widget) {
+        widget.hidden = true;
+        widget.setAttribute("aria-hidden", "true");
+        widget.style.display = "none";
+      }
+      return;
+    }
+
+    button.href = url;
+    button.target = "_blank";
+    button.rel = "noopener";
+    button.hidden = false;
+    button.removeAttribute("aria-hidden");
+    if (widget) {
+      widget.hidden = false;
+      widget.removeAttribute("aria-hidden");
+      widget.style.display = "";
+    }
+  }
+
+  function setSlideVisible(slide, isVisible) {
+    if (!slide) {
+      return;
+    }
+
+    slide.hidden = !isVisible;
+    slide.classList.toggle("uc-activity-slide-hidden", !isVisible);
+    slide.setAttribute("aria-hidden", isVisible ? "false" : "true");
+    slide.style.display = isVisible ? "" : "none";
+  }
+
+  function trimActivitySwiperSlides(swiperElement, activityCount) {
+    const slides = Array.from(swiperElement.querySelectorAll(".swiper-slide"));
+    const seenIndexes = new Set();
+    let sequentialIndex = 0;
+
+    slides.forEach((slide) => {
+      const rawIndex = slide.getAttribute("data-swiper-slide-index");
+      const index = rawIndex === null ? sequentialIndex++ : Number(rawIndex);
+      const hasValidIndex = Number.isInteger(index) && index >= 0 && index < activityCount;
+      const wasSeen = seenIndexes.has(index);
+
+      if (!hasValidIndex || wasSeen) {
+        slide.remove();
+        return;
+      }
+
+      seenIndexes.add(index);
+      setSlideVisible(slide, true);
+    });
+  }
+
+  function updateActivitySwipers(slides, activityCount) {
+    const swipers = [...new Set([...slides].map((slide) => slide?.closest(".swiper")).filter(Boolean))];
+
+    swipers.forEach((swiperElement) => {
+      const swiper = swiperElement.swiper;
+
+      if (!swiper) {
+        return;
+      }
+
+      try {
+        if (swiper.params) {
+          swiper.params.loop = false;
+        }
+        if (typeof swiper.loopDestroy === "function") {
+          swiper.loopDestroy();
+        }
+        trimActivitySwiperSlides(swiperElement, activityCount);
+        if (typeof swiper.updateSlides === "function") {
+          swiper.updateSlides();
+        }
+        if (typeof swiper.update === "function") {
+          swiper.update();
+        }
+      } catch (error) {
+        console.warn("Nao foi possivel atualizar o slider de atividades.", error);
+      }
+    });
+  }
+
+  function hydrateActivityCards(activities, item) {
     const titleNodes = findAllByText(".elementor-heading-title", "Nome da atividade");
     const usedSlides = new Set();
 
@@ -122,8 +309,9 @@
           Array.from(slide.querySelectorAll(".elementor-widget-text-editor p")).forEach((node) => {
             node.textContent = "";
           });
-          slide.hidden = true;
-          slide.setAttribute("aria-hidden", "true");
+          const button = slide.querySelector("a.elementor-button, a");
+          setActivityButton(button, "");
+          setSlideVisible(slide, false);
         }
         return;
       }
@@ -132,33 +320,25 @@
       const description = firstValue(activity.descricao, activity.description, activity.excerpt, activity.content);
       const difficulty = firstValue(activity.dificuldade, activity.difficulty);
       const audience = firstValue(activity.publico, activity.audience);
-      const url = firstValue(activity.url);
+      const url = buildWhatsAppUrl(activity, item);
 
       setText(titleNode, title);
 
       if (slide) {
-        slide.hidden = false;
-        slide.removeAttribute("aria-hidden");
-        setValueAfterLabel(slide, "Data e Horário", activitySummary(activity));
-        setValueAfterLabel(slide, "Descrição curta", description);
+        setSlideVisible(slide, true);
+        setValueAfterLabel(slide, ["Data e Horario", "Data e Hor\u00e1rio", "Data e HorÃ¡rio"], activitySummary(activity));
+        setValueAfterLabel(slide, ["Descricao curta", "Descri\u00e7\u00e3o curta", "DescriÃ§Ã£o curta", "Descricao", "Descri\u00e7\u00e3o"], description);
         setValueAfterLabel(slide, "Dificuldade", difficulty);
-        setValueAfterLabel(slide, "Público", audience);
+        setValueAfterLabel(slide, ["Publico", "P\u00fablico", "PÃºblico"], audience);
 
         const button = Array.from(slide.querySelectorAll("a.elementor-button, a"))
           .find((link) => /inscreva-se/i.test(textOf(link)) || link.getAttribute("href") === "#");
 
-        if (button && url) {
-          button.href = url;
-        }
+        setActivityButton(button, url);
       }
     });
 
-    usedSlides.forEach((slide) => {
-      const parentSwiper = slide.closest(".swiper");
-      if (parentSwiper?.swiper?.update) {
-        parentSwiper.swiper.update();
-      }
-    });
+    updateActivitySwipers(usedSlides, activities.length);
   }
 
   function hydrateInfoCards(item, activities) {
@@ -186,13 +366,22 @@
   }
 
   function hydrateRoute(item) {
-    const address = firstValue(item.endereco);
+    const address = cleanAddress(item.endereco);
     const mapUrl = getMapUrl(item);
     const routeTitle = findByText(".elementor-heading-title", "Como chegar");
-    const section = routeTitle?.closest(".e-con");
+    let section = routeTitle?.closest(".e-con");
+
+    while (section && !section.querySelector("iframe")) {
+      section = section.parentElement?.closest(".e-con");
+    }
+
+    if (!section) {
+      section = routeTitle?.closest(".e-con");
+    }
 
     if (section && address) {
-      const text = section.querySelector(".elementor-widget-text-editor p");
+      const leftColumn = routeTitle?.closest(".e-con") || section;
+      const text = leftColumn.querySelector(".elementor-widget-text-editor p, .elementor-widget-text-editor");
       setText(text, address);
     }
 
@@ -207,9 +396,7 @@
 
       const iframe = section.querySelector("iframe");
       if (iframe) {
-        const query = Number.isFinite(Number(item.lat)) && Number.isFinite(Number(item.lng))
-          ? `${item.lat},${item.lng}`
-          : address;
+        const query = getMapEmbedQuery(item);
         iframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(query)}&t=m&z=10&output=embed&iwloc=near`;
         iframe.title = query;
         iframe.setAttribute("aria-label", query);
@@ -217,17 +404,55 @@
     }
   }
 
-  function hydrateHero(item, activities) {
-    const subtitle = findByText(".elementor-widget-text-editor p", "Uma experiência de conexão com a natureza em uma das áreas protegidas mais incríveis do país.");
-    const firstActivity = activities[0] || {};
+  function findHeroSubtitle(item) {
+    const title = firstValue(item.name, item.title);
+    const titleNode = allElements(".elementor-heading-title, h1, h2")
+      .find((node) => title && matchesText(node, title));
+
+    if (!titleNode) {
+      return findByText(".elementor-widget-text-editor p", "Uma experiência de conexão com a natureza em uma das áreas protegidas mais incríveis do país.")
+        || findByText(".elementor-widget-text-editor p", "Uma experiÃªncia de conexÃ£o com a natureza em uma das Ã¡reas protegidas mais incrÃ­veis do paÃ­s.");
+    }
+
+    let section = titleNode.closest(".e-con");
+
+    while (section && !section.querySelector(".elementor-widget-text-editor p, .elementor-widget-text-editor")) {
+      section = section.parentElement?.closest(".e-con");
+    }
+
+    if (!section) {
+      return null;
+    }
+
+    const titleWidget = titleNode.closest(".elementor-element");
+    let cursor = titleWidget;
+
+    while (cursor && cursor.parentElement === titleWidget?.parentElement) {
+      cursor = cursor.nextElementSibling;
+
+      const text = cursor?.querySelector(".elementor-widget-text-editor p, .elementor-widget-text-editor");
+      if (text) {
+        return text;
+      }
+    }
+
+    return section.querySelector(".elementor-widget-text-editor p, .elementor-widget-text-editor");
+  }
+
+  function hydrateHero(item) {
+    const subtitle = findHeroSubtitle(item);
     const description = firstValue(
+      item.breve_descricao,
+      item.meta?._uc_breve_descricao,
       item.description,
       item.excerpt,
-      firstActivity.description,
-      firstActivity.descricao
+      item.content
     );
 
-    setText(subtitle, description);
+    if (subtitle) {
+      subtitle.textContent = description;
+      subtitle.hidden = !description;
+    }
   }
 
   async function hydrate() {
@@ -246,8 +471,8 @@
 
       const activities = getActivities(item);
       const applyHydration = () => {
-        hydrateHero(item, activities);
-        hydrateActivityCards(activities);
+        hydrateHero(item);
+        hydrateActivityCards(activities, item);
         hydrateInfoCards(item, activities);
         hydrateRoute(item);
         document.documentElement.classList.add("uc-single-data-ready");

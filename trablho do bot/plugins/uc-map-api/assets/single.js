@@ -26,24 +26,50 @@
     }
   }
 
+  function parseCoordinate(value) {
+    const normalized = String(value ?? "").trim().replace(",", ".");
+    const parsed = Number(normalized);
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+
+  function getCoordinates(item) {
+    const lat = parseCoordinate(item.lat);
+    const lng = parseCoordinate(item.lng);
+
+    if (lat === null || lng === null) {
+      return null;
+    }
+
+    return { lat, lng };
+  }
+
+  function extractFirstUrl(value) {
+    return firstValue(value).match(/https?:\/\/[^\s<>"']+/i)?.[0] || "";
+  }
+
+  function cleanAddress(value) {
+    return firstValue(value)
+      .replace(/https?:\/\/[^\s<>"']+/gi, "")
+      .replace(/(?:localiza[cç][aã]o no google maps|google maps|endere[cç]o)\s*:?/gi, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
   function getActivities(item) {
     return Array.isArray(item?.atividades) ? item.atividades : [];
   }
 
   function getMapUrl(item) {
-    const directUrl = firstValue(item.link_do_endereco);
-    const address = firstValue(item.endereco);
+    const coordinates = getCoordinates(item);
+    const directUrl = firstValue(item.link_do_endereco, extractFirstUrl(item.endereco));
+    const address = cleanAddress(item.endereco);
 
     if (directUrl) {
       return directUrl;
     }
 
-    if (/^https?:\/\//i.test(address)) {
-      return address;
-    }
-
-    if (Number.isFinite(Number(item.lat)) && Number.isFinite(Number(item.lng))) {
-      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${item.lat},${item.lng}`)}`;
+    if (coordinates) {
+      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${coordinates.lat},${coordinates.lng}`)}`;
     }
 
     if (address) {
@@ -51,6 +77,16 @@
     }
 
     return "";
+  }
+
+  function getMapEmbedQuery(item) {
+    const coordinates = getCoordinates(item);
+
+    if (coordinates) {
+      return `${coordinates.lat},${coordinates.lng}`;
+    }
+
+    return cleanAddress(item.endereco) || firstValue(item.city, item.state, item.uf, item.name);
   }
 
   function allElements(selector) {
@@ -186,13 +222,22 @@
   }
 
   function hydrateRoute(item) {
-    const address = firstValue(item.endereco);
+    const address = cleanAddress(item.endereco);
     const mapUrl = getMapUrl(item);
     const routeTitle = findByText(".elementor-heading-title", "Como chegar");
-    const section = routeTitle?.closest(".e-con");
+    let section = routeTitle?.closest(".e-con");
+
+    while (section && !section.querySelector("iframe")) {
+      section = section.parentElement?.closest(".e-con");
+    }
+
+    if (!section) {
+      section = routeTitle?.closest(".e-con");
+    }
 
     if (section && address) {
-      const text = section.querySelector(".elementor-widget-text-editor p");
+      const leftColumn = routeTitle?.closest(".e-con") || section;
+      const text = leftColumn.querySelector(".elementor-widget-text-editor p, .elementor-widget-text-editor");
       setText(text, address);
     }
 
@@ -207,9 +252,7 @@
 
       const iframe = section.querySelector("iframe");
       if (iframe) {
-        const query = Number.isFinite(Number(item.lat)) && Number.isFinite(Number(item.lng))
-          ? `${item.lat},${item.lng}`
-          : address;
+        const query = getMapEmbedQuery(item);
         iframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(query)}&t=m&z=10&output=embed&iwloc=near`;
         iframe.title = query;
         iframe.setAttribute("aria-label", query);
@@ -217,17 +260,20 @@
     }
   }
 
-  function hydrateHero(item, activities) {
+  function hydrateHero(item) {
     const subtitle = findByText(".elementor-widget-text-editor p", "Uma experiência de conexão com a natureza em uma das áreas protegidas mais incríveis do país.");
-    const firstActivity = activities[0] || {};
     const description = firstValue(
       item.description,
+      item.breve_descricao,
+      item.meta?._uc_breve_descricao,
       item.excerpt,
-      firstActivity.description,
-      firstActivity.descricao
+      item.content
     );
 
-    setText(subtitle, description);
+    if (subtitle) {
+      subtitle.textContent = description;
+      subtitle.hidden = !description;
+    }
   }
 
   async function hydrate() {
@@ -246,7 +292,7 @@
 
       const activities = getActivities(item);
       const applyHydration = () => {
-        hydrateHero(item, activities);
+        hydrateHero(item);
         hydrateActivityCards(activities);
         hydrateInfoCards(item, activities);
         hydrateRoute(item);
