@@ -2,6 +2,8 @@
 
 Plugin WordPress de integracao entre a base JSON e o plugin legado **Um Dia No Parque**.
 
+Versao atual: `0.2.1`.
+
 ## Objetivo
 
 - Importar `map-data.json`, `base.json` ou `base-geocoded.json`.
@@ -91,3 +93,9 @@ O campo `image` inclui:
 ```
 
 As atividades dentro de `atividades` tambem trazem `url`, `slug`, `content`, `excerpt`, `image`, `image_url`, `thumbnail` e `meta`.
+
+## Admin customizado
+
+O plugin substitui os formularios administrativos dos CPTs `uc` e `atividade` por telas mais limpas, mantendo os mesmos meta fields do plugin legado.
+
+Os termos de `tipo_atividade` sao normalizados automaticamente para uma lista fixa com metadado `_api_np_fa_icon`, usado para guardar a classe Font Awesome de cada tipo.

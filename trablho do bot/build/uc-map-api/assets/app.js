@@ -109,6 +109,41 @@ function getActivities(item) {
   return [];
 }
 
+function splitTypeText(value) {
+  return String(value || "")
+    .split(/[,;/|]+/g)
+    .map((item) => decodeHtml(item).trim())
+    .filter(Boolean);
+}
+
+function getActivityTypes(activities, item) {
+  const types = [];
+
+  activities.forEach((activity) => {
+    if (Array.isArray(activity?.tipos)) {
+      activity.tipos.forEach((type) => {
+        if (type?.name) {
+          types.push(decodeHtml(type.name).trim());
+        }
+      });
+    }
+
+    if (Array.isArray(activity?.types)) {
+      activity.types.forEach((type) => {
+        types.push(decodeHtml(type?.name || type).trim());
+      });
+    }
+
+    splitTypeText(activity?.tipo).forEach((type) => types.push(type));
+    splitTypeText(activity?.type).forEach((type) => types.push(type));
+  });
+
+  splitTypeText(item?.tipo).forEach((type) => types.push(type));
+  splitTypeText(item?.activity_type).forEach((type) => types.push(type));
+
+  return [...new Set(types.filter(Boolean))].sort((a, b) => a.localeCompare(b, "pt-BR"));
+}
+
 function escapeAttribute(value) {
   return String(value ?? "")
     .replace(/&/g, "&amp;")
@@ -201,10 +236,10 @@ function populateFilters() {
     { id: "park-filter", key: "name" },
     { id: "biome-filter", key: "biome" },
     { id: "city-filter", key: "city" },
-    { id: "activity-filter", key: "activity" },
+    { id: "activity-filter", key: "activityTypes", multiple: true },
   ];
 
-  filterMap.forEach(({ id, key }) => {
+  filterMap.forEach(({ id, key, multiple }) => {
     const select = root.querySelector(`#${id}`);
     const placeholder = select.options[0];
     const currentValue = select.value;
@@ -212,7 +247,13 @@ function populateFilters() {
     select.innerHTML = "";
     select.appendChild(placeholder);
 
-    const values = [...new Set(allParks.map((park) => park[key]).filter(Boolean))].sort((a, b) => a.localeCompare(b, "pt-BR"));
+    const values = [
+      ...new Set(
+        allParks
+          .flatMap((park) => (multiple && Array.isArray(park[key]) ? park[key] : [park[key]]))
+          .filter(Boolean)
+      ),
+    ].sort((a, b) => a.localeCompare(b, "pt-BR"));
 
     values.forEach((value) => {
       const option = document.createElement("option");
@@ -429,6 +470,7 @@ function filterItems() {
       item.state,
       item.biome,
       item.activity,
+      ...(Array.isArray(item.activityTypes) ? item.activityTypes : []),
       item.endereco,
       item.cep,
     ].join(" ");
@@ -438,7 +480,7 @@ function filterItems() {
       (!park || item.name === park) &&
       (!biome || item.biome === biome) &&
       (!city || item.city === city) &&
-      (!activity || item.activity === activity)
+      (!activity || (Array.isArray(item.activityTypes) && item.activityTypes.includes(activity)))
     );
   });
 
@@ -458,6 +500,7 @@ function applyPins(nextPins) {
   allParks = nextPins
     .map((item) => {
       const atividades = getActivities(item);
+      const activityTypes = getActivityTypes(atividades, item);
       const lat = toNumber(item?.lat ?? item?.latitude);
       const lng = toNumber(item?.lng ?? item?.longitude);
 
@@ -471,7 +514,8 @@ function applyPins(nextPins) {
         uf: firstValue(item?.uf),
         city: firstValue(item?.city, item?.municipio, "Cidade"),
         biome: firstValue(item?.biome, item?.bioma, "Bioma"),
-        activity: firstValue(item?.activity, atividades[0]?.title, atividades[0]?.titulo, atividades[0]?.tipo, "Atividade"),
+        activity: firstValue(item?.activity, activityTypes[0], atividades[0]?.title, atividades[0]?.titulo, atividades[0]?.tipo, "Atividade"),
+        activityTypes,
         lat,
         lng,
         description: firstValue(item?.description, item?.excerpt, item?.content, item?.breve_descricao),

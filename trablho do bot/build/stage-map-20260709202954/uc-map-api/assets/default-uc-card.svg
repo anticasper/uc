@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" role="img" aria-label="Paisagem generica de unidade de conservacao">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6f8f88"/>
+      <stop offset="0.44" stop-color="#283d35"/>
+      <stop offset="1" stop-color="#07100b"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e8eee9" stop-opacity="0.78"/>
+      <stop offset="0.42" stop-color="#bfcac3" stop-opacity="0.54"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.22"/>
+    </linearGradient>
+    <filter id="texture">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.03" numOctaves="4" seed="12"/>
+      <feColorMatrix type="saturate" values="0.15"/>
+      <feBlend mode="multiply" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <rect width="900" height="1200" fill="url(#sky)"/>
+  <g filter="url(#texture)" opacity="0.9">
+    <path d="M0 425c110-88 210-119 314-92 134 35 228 3 353-66 72-39 151-68 233-82v1015H0z" fill="#0b1e14"/>
+    <path d="M0 544c128-54 241-57 356-16 132 48 240 33 358-28 64-33 125-50 186-51v751H0z" fill="#06110b"/>
+    <path d="M515 0h247c4 106-10 206-43 300-28 81-77 143-104 226-29 88-18 183-52 285-23 69-65 128-121 177h-94c52-91 71-181 74-274 4-132 36-222 79-333C538 284 536 136 515 0z" fill="url(#water)"/>
+    <path d="M592 0h123c-4 110-19 201-47 272-31 80-74 147-91 221-19 83 3 173-24 257-16 49-44 98-82 141h-52c42-87 52-179 53-264 1-104 31-184 66-277 34-90 55-214 54-350z" fill="#f6fbf7" opacity="0.35"/>
+    <path d="M0 0h520c-29 153-84 266-168 349C276 425 171 480 0 536z" fill="#4d6d50" opacity="0.54"/>
+    <path d="M0 694c109-31 215-34 318-8 133 33 281 3 582-136v650H0z" fill="#020604" opacity="0.82"/>
+  </g>
+  <rect width="900" height="1200" fill="#000000" opacity="0.18"/>
+</svg>

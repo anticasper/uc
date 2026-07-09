@@ -1,0 +1,345 @@
+.post-type-uc #postdivrich,
+.post-type-uc #postexcerpt {
+  display: none !important;
+}
+
+.post-type-uc #titlewrap #title {
+  height: 48px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 0 16px;
+  color: #0f172a;
+  font-size: 21px;
+  font-weight: 700;
+  box-shadow: none;
+}
+
+.post-type-uc #titlewrap #title:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 1px #2563eb;
+}
+
+.post-type-uc #api_np_uc_dados.postbox {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.post-type-uc #api_np_uc_dados .postbox-header {
+  display: none;
+}
+
+.post-type-uc #api_np_uc_dados .inside {
+  margin: 0;
+  padding: 0;
+}
+
+.api-np-uc-form {
+  color: #0f172a;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.api-np-uc-section {
+  margin: 0 0 22px;
+  padding: 0 0 20px;
+  border-bottom: 1px solid #d7e0ea;
+  background: #ffffff;
+}
+
+.api-np-uc-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #2563eb;
+}
+
+.api-np-uc-section__header h2 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.api-np-uc-section__header--actions {
+  align-items: center;
+}
+
+.api-np-uc-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.api-np-uc-grid--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.api-np-uc-grid--4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.api-np-uc-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 6px;
+}
+
+.api-np-uc-field--full {
+  grid-column: 1 / -1;
+}
+
+.api-np-uc-field--span-2 {
+  grid-column: span 2;
+}
+
+.api-np-uc-field span {
+  color: #0f172a;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.api-np-uc-field input,
+.api-np-uc-field select,
+.api-np-uc-field textarea {
+  width: 100%;
+  min-height: 42px;
+  max-width: none;
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  padding: 9px 12px;
+  color: #0f172a;
+  background: #f8fafc;
+  box-shadow: none;
+  box-sizing: border-box;
+}
+
+.api-np-uc-field textarea {
+  min-height: 106px;
+  resize: vertical;
+}
+
+.api-np-uc-field input::placeholder,
+.api-np-uc-field textarea::placeholder {
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.api-np-uc-field input:focus,
+.api-np-uc-field select:focus,
+.api-np-uc-field textarea:focus {
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 1px #2563eb;
+  outline: 0;
+}
+
+.api-np-image-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.api-np-image-preview img {
+  display: block;
+  max-width: 100%;
+  max-height: 190px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.api-np-image-preview em {
+  color: #64748b;
+}
+
+.api-np-image-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.api-np-activity-table-wrap {
+  position: relative;
+}
+
+.api-np-activity-table {
+  border-color: #cbd5e1;
+}
+
+.api-np-activity-table th {
+  color: #0f172a;
+  font-weight: 800;
+  background: #e8eef5;
+}
+
+.api-np-activity-table td {
+  vertical-align: middle;
+}
+
+.api-np-activity-table small {
+  display: block;
+  margin-top: 2px;
+  color: #64748b;
+}
+
+.api-np-activity-actions {
+  width: 100px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.api-np-activity-empty {
+  margin: 0;
+  padding: 18px;
+  border: 1px dashed #cbd5e1;
+  border-top: 0;
+  color: #64748b;
+  text-align: center;
+  background: #f8fafc;
+}
+
+.api-np-modal[hidden] {
+  display: none;
+}
+
+.api-np-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+
+.api-np-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.68);
+}
+
+.api-np-modal__panel {
+  position: relative;
+  z-index: 1;
+  width: min(1120px, 100%);
+  max-height: min(760px, calc(100vh - 60px));
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 22px 60px rgba(15, 23, 42, 0.28);
+}
+
+.api-np-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 999px;
+  color: #475569;
+  background: transparent;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.api-np-modal__header {
+  padding: 26px 28px 14px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.api-np-modal__header h2 {
+  margin: 0 0 6px;
+  color: #2563eb;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.api-np-modal__header p {
+  margin: 0;
+  color: #64748b;
+}
+
+.api-np-modal__toolbar {
+  padding: 16px 28px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.api-np-modal__toolbar input {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  padding: 9px 12px;
+  background: #f8fafc;
+}
+
+.api-np-modal__list {
+  overflow: auto;
+  padding: 0 28px;
+}
+
+.api-np-activity-option {
+  display: grid;
+  grid-template-columns: 34px minmax(220px, 1.2fr) 130px 120px minmax(240px, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-height: 54px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #0f172a;
+  cursor: pointer;
+}
+
+.api-np-activity-option:hover {
+  background: #f8fafc;
+}
+
+.api-np-activity-option__title {
+  font-weight: 800;
+}
+
+.api-np-modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 28px 24px;
+  border-top: 1px solid #e2e8f0;
+}
+
+@media (max-width: 1200px) {
+  .api-np-uc-grid--4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 782px) {
+  .api-np-uc-grid--2,
+  .api-np-uc-grid--4 {
+    grid-template-columns: 1fr;
+  }
+
+  .api-np-uc-field--span-2 {
+    grid-column: auto;
+  }
+
+  .api-np-modal {
+    padding: 12px;
+  }
+
+  .api-np-activity-option {
+    grid-template-columns: 28px 1fr;
+  }
+
+  .api-np-activity-option span:not(.api-np-activity-option__title) {
+    grid-column: 2;
+  }
+}

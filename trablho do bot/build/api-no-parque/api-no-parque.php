@@ -3,7 +3,7 @@
  * Plugin Name: API No Parque
  * Plugin URI: https://barradois.com
  * Description: API e importador para integrar a base JSON com os cadastros do plugin Um Dia No Parque.
- * Version: 0.1.2
+ * Version: 0.1.3
  * Author: Diovanni de Souza
  * Author URI: https://barradois.com
  * License: GPL-2.0-or-later
@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 }
 
 final class Api_No_Parque {
-    const VERSION = '0.1.2';
+    const VERSION = '0.1.3';
     const REST_NAMESPACE = 'api-no-parque/v1';
 
     const META_SOURCE_ID = '_api_np_source_id';
@@ -73,6 +73,10 @@ final class Api_No_Parque {
 
     private function __construct() {
         add_action('rest_api_init', array($this, 'register_routes'));
+        add_action('init', array($this, 'customize_uc_admin_support'), 100);
+        add_action('add_meta_boxes', array($this, 'replace_uc_meta_box'), 100, 2);
+        add_action('admin_enqueue_scripts', array($this, 'enqueue_uc_admin_assets'));
+        add_filter('enter_title_here', array($this, 'filter_uc_title_placeholder'), 10, 2);
         add_action('admin_menu', array($this, 'register_admin_page'));
         add_action('admin_post_api_np_import_json', array($this, 'handle_admin_import'));
         add_action('admin_post_api_np_purge_data', array($this, 'handle_admin_purge'));
@@ -258,6 +262,348 @@ final class Api_No_Parque {
             </form>
         </div>
         <?php
+    }
+
+    public function customize_uc_admin_support() {
+        if (!post_type_exists('uc')) {
+            return;
+        }
+
+        remove_post_type_support('uc', 'editor');
+        remove_post_type_support('uc', 'excerpt');
+    }
+
+    public function filter_uc_title_placeholder($placeholder, $post) {
+        if ($post && 'uc' === $post->post_type) {
+            return __('Nome da Unidade de Conservacao', 'api-no-parque');
+        }
+
+        return $placeholder;
+    }
+
+    public function replace_uc_meta_box($post_type, $post) {
+        if ('uc' !== $post_type) {
+            return;
+        }
+
+        remove_meta_box('uc_dados', 'uc', 'normal');
+
+        add_meta_box(
+            'api_np_uc_dados',
+            __('Cadastro da UC', 'api-no-parque'),
+            array($this, 'render_uc_admin_form'),
+            'uc',
+            'normal',
+            'high'
+        );
+    }
+
+    public function enqueue_uc_admin_assets($hook) {
+        if (!in_array($hook, array('post.php', 'post-new.php'), true)) {
+            return;
+        }
+
+        $screen = get_current_screen();
+        if (!$screen || 'uc' !== $screen->post_type) {
+            return;
+        }
+
+        $plugin_url = plugin_dir_url(__FILE__);
+
+        wp_enqueue_media();
+
+        wp_enqueue_style(
+            'api-np-uc-admin',
+            $plugin_url . 'assets/admin-uc-form.css',
+            array(),
+            $this->asset_version('assets/admin-uc-form.css')
+        );
+
+        wp_enqueue_script(
+            'api-np-uc-admin',
+            $plugin_url . 'assets/admin-uc-form.js',
+            array(),
+            $this->asset_version('assets/admin-uc-form.js'),
+            true
+        );
+
+        wp_localize_script('api-np-uc-admin', 'ApiNpUcAdmin', array(
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'citiesNonce' => wp_create_nonce('um_dia_no_parque_elementor_nonce'),
+            'labels' => array(
+                'selectStateFirst' => __('Selecione o estado primeiro', 'api-no-parque'),
+                'loading' => __('Carregando...', 'api-no-parque'),
+                'selectCity' => __('Selecione a cidade', 'api-no-parque'),
+                'noCity' => __('Nenhuma cidade encontrada', 'api-no-parque'),
+                'loadError' => __('Erro ao carregar', 'api-no-parque'),
+                'noActivities' => __('Nenhuma atividade selecionada.', 'api-no-parque'),
+                'remove' => __('Remover', 'api-no-parque'),
+            ),
+        ));
+    }
+
+    public function render_uc_admin_form($post) {
+        wp_nonce_field('uc_dados_nonce', 'uc_dados_nonce_field');
+
+        $responsavel = get_post_meta($post->ID, '_uc_responsavel_atividade', true);
+        $email = get_post_meta($post->ID, '_uc_email', true);
+        $whatsapp = get_post_meta($post->ID, '_uc_whatsapp', true);
+        $realizador = get_post_meta($post->ID, '_uc_realizador_atividade', true);
+        $breve_descricao = get_post_meta($post->ID, '_uc_breve_descricao', true);
+        $cep = get_post_meta($post->ID, '_uc_cep', true);
+        $endereco = get_post_meta($post->ID, '_uc_endereco', true);
+        $numero = get_post_meta($post->ID, '_uc_numero', true);
+        $link_endereco = get_post_meta($post->ID, '_uc_link_endereco', true);
+        $social = get_post_meta($post->ID, '_uc_social', true);
+        $imagem_id = (int) get_post_meta($post->ID, '_uc_imagem', true);
+
+        $city_data = $this->get_uc_admin_city_data($post->ID);
+        $ufs = get_posts(array(
+            'post_type' => 'uf',
+            'posts_per_page' => -1,
+            'post_status' => 'publish',
+            'orderby' => 'title',
+            'order' => 'ASC',
+        ));
+
+        $selected_activity_ids = get_post_meta($post->ID, '_uc_atividade_ids', true);
+        $selected_activity_ids = is_array($selected_activity_ids) ? array_values(array_unique(array_map('intval', $selected_activity_ids))) : array();
+        $activities = get_posts(array(
+            'post_type' => 'atividade',
+            'posts_per_page' => -1,
+            'post_status' => 'publish',
+            'orderby' => 'title',
+            'order' => 'ASC',
+        ));
+        $activities_by_id = array();
+        foreach ($activities as $activity) {
+            $activities_by_id[(int) $activity->ID] = $activity;
+        }
+
+        $image_url = $imagem_id ? wp_get_attachment_image_url($imagem_id, 'medium') : '';
+        ?>
+        <div class="api-np-uc-form" data-api-np-uc-form>
+            <section class="api-np-uc-section">
+                <div class="api-np-uc-section__header">
+                    <h2><?php esc_html_e('Dados da Unidade de Conservacao', 'api-no-parque'); ?></h2>
+                </div>
+
+                <div class="api-np-uc-grid api-np-uc-grid--4">
+                    <?php $this->render_uc_text_field('uc_responsavel', __('Responsavel pela Atividade', 'api-no-parque'), $responsavel, 'text', __('Nome do responsavel', 'api-no-parque')); ?>
+                    <?php $this->render_uc_text_field('uc_email', __('Email', 'api-no-parque'), $email, 'email', 'contato@email.com'); ?>
+                    <?php $this->render_uc_text_field('uc_whatsapp', __('WhatsApp', 'api-no-parque'), $whatsapp, 'tel', __('Telefone com DDD', 'api-no-parque')); ?>
+                    <?php $this->render_uc_text_field('uc_realizador', __('Realizador da Atividade', 'api-no-parque'), $realizador, 'text', __('Instituicao responsavel', 'api-no-parque')); ?>
+
+                    <label class="api-np-uc-field api-np-uc-field--full" for="uc_breve_descricao">
+                        <span><?php esc_html_e('Breve descricao da UC', 'api-no-parque'); ?></span>
+                        <textarea id="uc_breve_descricao" name="uc_breve_descricao" rows="4" placeholder="<?php esc_attr_e('Resumo curto usado no destaque da UC.', 'api-no-parque'); ?>"><?php echo esc_textarea($breve_descricao); ?></textarea>
+                    </label>
+                </div>
+            </section>
+
+            <section class="api-np-uc-section">
+                <div class="api-np-uc-section__header">
+                    <h2><?php esc_html_e('Dados de Localizacao', 'api-no-parque'); ?></h2>
+                </div>
+
+                <div class="api-np-uc-grid api-np-uc-grid--4">
+                    <label class="api-np-uc-field" for="uc_uf_id">
+                        <span><?php esc_html_e('Estado', 'api-no-parque'); ?></span>
+                        <select id="uc_uf_id" name="uc_uf_id" data-api-np-state>
+                            <option value=""><?php esc_html_e('Selecione o estado', 'api-no-parque'); ?></option>
+                            <?php foreach ($ufs as $uf) :
+                                $sigla = get_post_meta($uf->ID, '_uf_sigla', true);
+                                ?>
+                                <option value="<?php echo esc_attr($uf->ID); ?>" <?php selected((int) $city_data['uf_id'], (int) $uf->ID); ?>>
+                                    <?php echo esc_html($sigla ? $uf->post_title . ' (' . $sigla . ')' : $uf->post_title); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </label>
+
+                    <label class="api-np-uc-field" for="uc_municipio">
+                        <span><?php esc_html_e('Municipio', 'api-no-parque'); ?></span>
+                        <select id="uc_municipio" name="uc_municipio" data-api-np-city data-current-city="<?php echo esc_attr($city_data['city']); ?>">
+                            <option value=""><?php esc_html_e('Selecione o estado primeiro', 'api-no-parque'); ?></option>
+                        </select>
+                    </label>
+
+                    <?php $this->render_uc_text_field('uc_cep', __('CEP', 'api-no-parque'), $cep, 'text', '00000-000'); ?>
+                    <?php $this->render_uc_text_field('uc_numero', __('Numero', 'api-no-parque'), $numero, 'text', __('Numero ou S/N', 'api-no-parque')); ?>
+                    <?php $this->render_uc_text_field('uc_endereco', __('Endereco', 'api-no-parque'), $endereco, 'text', __('Digite o endereco', 'api-no-parque'), 'api-np-uc-field--span-2'); ?>
+                    <?php $this->render_uc_text_field('uc_link_endereco', __('Link do Endereco (Google Maps)', 'api-no-parque'), $link_endereco, 'url', 'https://', 'api-np-uc-field--span-2'); ?>
+                </div>
+            </section>
+
+            <section class="api-np-uc-section">
+                <div class="api-np-uc-section__header">
+                    <h2><?php esc_html_e('Midia e Redes', 'api-no-parque'); ?></h2>
+                </div>
+
+                <div class="api-np-uc-grid api-np-uc-grid--2">
+                    <?php $this->render_uc_text_field('uc_social', __('Redes Sociais', 'api-no-parque'), $social, 'text', __('Instagram, Facebook, site...', 'api-no-parque')); ?>
+
+                    <div class="api-np-uc-field api-np-image-field" data-api-np-image-field>
+                        <span><?php esc_html_e('Imagem da UC', 'api-no-parque'); ?></span>
+                        <input type="hidden" name="uc_imagem" value="<?php echo esc_attr((string) $imagem_id); ?>" data-api-np-image-id>
+                        <div class="api-np-image-preview" data-api-np-image-preview>
+                            <?php if ($image_url) : ?>
+                                <img src="<?php echo esc_url($image_url); ?>" alt="">
+                            <?php else : ?>
+                                <em><?php esc_html_e('Nenhuma imagem selecionada.', 'api-no-parque'); ?></em>
+                            <?php endif; ?>
+                        </div>
+                        <div class="api-np-image-actions">
+                            <button type="button" class="button button-primary" data-api-np-select-image><?php esc_html_e('Selecionar imagem', 'api-no-parque'); ?></button>
+                            <button type="button" class="button" data-api-np-remove-image <?php echo $imagem_id ? '' : 'hidden'; ?>><?php esc_html_e('Remover', 'api-no-parque'); ?></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="api-np-uc-section">
+                <div class="api-np-uc-section__header api-np-uc-section__header--actions">
+                    <h2><?php esc_html_e('Atividades da UC', 'api-no-parque'); ?></h2>
+                    <button type="button" class="button button-primary" data-api-np-open-activity-modal><?php esc_html_e('Adicionar atividade', 'api-no-parque'); ?></button>
+                </div>
+
+                <input type="hidden" name="uc_atividade_ids[]" value="">
+                <div class="api-np-activity-table-wrap">
+                    <table class="widefat striped api-np-activity-table" data-api-np-selected-table>
+                        <thead>
+                            <tr>
+                                <th><?php esc_html_e('Atividade', 'api-no-parque'); ?></th>
+                                <th><?php esc_html_e('Data', 'api-no-parque'); ?></th>
+                                <th><?php esc_html_e('Horario', 'api-no-parque'); ?></th>
+                                <th><?php esc_html_e('Descricao', 'api-no-parque'); ?></th>
+                                <th class="api-np-activity-actions"><?php esc_html_e('Acoes', 'api-no-parque'); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody data-api-np-selected-body>
+                            <?php foreach ($selected_activity_ids as $activity_id) :
+                                if (!isset($activities_by_id[$activity_id])) {
+                                    continue;
+                                }
+                                echo $this->render_activity_table_row($activities_by_id[$activity_id], true);
+                            endforeach; ?>
+                        </tbody>
+                    </table>
+                    <p class="api-np-activity-empty" data-api-np-selected-empty <?php echo empty($selected_activity_ids) ? '' : 'hidden'; ?>>
+                        <?php esc_html_e('Nenhuma atividade selecionada.', 'api-no-parque'); ?>
+                    </p>
+                </div>
+            </section>
+
+            <div class="api-np-modal" data-api-np-activity-modal hidden>
+                <div class="api-np-modal__backdrop" data-api-np-close-activity-modal></div>
+                <section class="api-np-modal__panel" role="dialog" aria-modal="true" aria-labelledby="api-np-activity-modal-title">
+                    <button type="button" class="api-np-modal__close" data-api-np-close-activity-modal aria-label="<?php esc_attr_e('Fechar', 'api-no-parque'); ?>">x</button>
+                    <div class="api-np-modal__header">
+                        <h2 id="api-np-activity-modal-title"><?php esc_html_e('Adicionar atividades', 'api-no-parque'); ?></h2>
+                        <p><?php esc_html_e('Busque e marque as atividades que devem aparecer nesta UC.', 'api-no-parque'); ?></p>
+                    </div>
+                    <div class="api-np-modal__toolbar">
+                        <input type="search" data-api-np-activity-search placeholder="<?php esc_attr_e('Buscar por nome, data ou descricao...', 'api-no-parque'); ?>">
+                    </div>
+                    <div class="api-np-modal__list" data-api-np-activity-list>
+                        <?php foreach ($activities as $activity) :
+                            $activity_id = (int) $activity->ID;
+                            $checked = in_array($activity_id, $selected_activity_ids, true);
+                            $data = $this->get_activity_admin_data($activity);
+                            ?>
+                            <label class="api-np-activity-option" data-api-np-activity-option data-search="<?php echo esc_attr(strtolower(remove_accents($data['title'] . ' ' . $data['date'] . ' ' . $data['time'] . ' ' . $data['description']))); ?>">
+                                <input type="checkbox" value="<?php echo esc_attr((string) $activity_id); ?>" <?php checked($checked); ?> data-api-np-activity-checkbox>
+                                <span class="api-np-activity-option__title"><?php echo esc_html($data['title']); ?></span>
+                                <span><?php echo esc_html($data['date'] ?: '-'); ?></span>
+                                <span><?php echo esc_html($data['time'] ?: '-'); ?></span>
+                                <span><?php echo esc_html(wp_trim_words($data['description'], 14, '...')); ?></span>
+                            </label>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="api-np-modal__footer">
+                        <button type="button" class="button" data-api-np-close-activity-modal><?php esc_html_e('Cancelar', 'api-no-parque'); ?></button>
+                        <button type="button" class="button button-primary" data-api-np-apply-activities><?php esc_html_e('Aplicar selecao', 'api-no-parque'); ?></button>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <?php
+    }
+
+    private function render_uc_text_field($name, $label, $value, $type = 'text', $placeholder = '', $class = '') {
+        ?>
+        <label class="api-np-uc-field <?php echo esc_attr($class); ?>" for="<?php echo esc_attr($name); ?>">
+            <span><?php echo esc_html($label); ?></span>
+            <input type="<?php echo esc_attr($type); ?>" id="<?php echo esc_attr($name); ?>" name="<?php echo esc_attr($name); ?>" value="<?php echo esc_attr((string) $value); ?>" placeholder="<?php echo esc_attr((string) $placeholder); ?>">
+        </label>
+        <?php
+    }
+
+    private function get_uc_admin_city_data(int $post_id) {
+        $result = array(
+            'city' => (string) get_post_meta($post_id, '_uc_municipio', true),
+            'uf_id' => 0,
+        );
+
+        $city_terms = wp_get_object_terms($post_id, 'cidade', array('fields' => 'ids'));
+        if (!is_wp_error($city_terms) && !empty($city_terms)) {
+            $term = get_term((int) $city_terms[0], 'cidade');
+            if ($term && !is_wp_error($term)) {
+                $result['city'] = $term->name;
+            }
+            $result['uf_id'] = (int) get_term_meta((int) $city_terms[0], '_cidade_uf', true);
+        }
+
+        if (!$result['uf_id']) {
+            $uf_ids = get_post_meta($post_id, '_uc_uf_ids', true);
+            if (is_array($uf_ids) && !empty($uf_ids)) {
+                $result['uf_id'] = (int) reset($uf_ids);
+            } else {
+                $result['uf_id'] = (int) get_post_meta($post_id, '_uc_uf_id', true);
+            }
+        }
+
+        return $result;
+    }
+
+    private function render_activity_table_row($activity, $with_input = false) {
+        $data = $this->get_activity_admin_data($activity);
+
+        ob_start();
+        ?>
+        <tr data-api-np-selected-activity="<?php echo esc_attr((string) $data['id']); ?>">
+            <td>
+                <?php if ($with_input) : ?>
+                    <input type="hidden" name="uc_atividade_ids[]" value="<?php echo esc_attr((string) $data['id']); ?>">
+                <?php endif; ?>
+                <strong><?php echo esc_html($data['title']); ?></strong>
+                <small>#<?php echo esc_html((string) $data['id']); ?></small>
+            </td>
+            <td><?php echo esc_html($data['date'] ?: '-'); ?></td>
+            <td><?php echo esc_html($data['time'] ?: '-'); ?></td>
+            <td><?php echo esc_html(wp_trim_words($data['description'], 18, '...')); ?></td>
+            <td class="api-np-activity-actions">
+                <button type="button" class="button-link-delete" data-api-np-remove-activity="<?php echo esc_attr((string) $data['id']); ?>"><?php esc_html_e('Remover', 'api-no-parque'); ?></button>
+            </td>
+        </tr>
+        <?php
+        return ob_get_clean();
+    }
+
+    private function get_activity_admin_data($activity) {
+        $post_id = (int) $activity->ID;
+        $description = get_post_meta($post_id, '_atividade_descricao', true);
+        if ('' === trim((string) $description)) {
+            $description = $activity->post_excerpt ?: $activity->post_content;
+        }
+
+        return array(
+            'id' => $post_id,
+            'title' => get_the_title($post_id),
+            'date' => (string) get_post_meta($post_id, '_atividade_data', true),
+            'time' => (string) get_post_meta($post_id, '_atividade_horario', true),
+            'description' => wp_strip_all_tags((string) $description),
+        );
     }
 
     public function handle_admin_import() {
@@ -1331,6 +1677,11 @@ final class Api_No_Parque {
 
     private function legacy_available() {
         return post_type_exists('uc') && post_type_exists('atividade') && post_type_exists('uf') && taxonomy_exists('bioma') && taxonomy_exists('cidade');
+    }
+
+    private function asset_version(string $relative_path) {
+        $path = plugin_dir_path(__FILE__) . ltrim($relative_path, '/');
+        return file_exists($path) ? (string) filemtime($path) : self::VERSION;
     }
 
     private function is_uc(int $post_id) {
